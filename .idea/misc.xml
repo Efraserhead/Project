@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/Project/app/src/main/res/layout/activity_additional_resources.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/Project/app/src/main/res/layout/activity_categories.xml" value="0.4" />
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/Project/app/src/main/res/layout/activity_home.xml" value="0.4" />
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/Project/app/src/main/res/layout/activity_lesson_data.xml" value="0.35260416666666666" />
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/Project/app/src/main/res/layout/activity_lesson_data_types.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/Project/app/src/main/res/layout/activity_lesson_operators.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/Project/app/src/main/res/layout/activity_lesson_variables.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/Project/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/Project/app/src/main/res/layout/activity_problem.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/Project/app/src/main/res/layout/activity_problem_list.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/Project/app/src/main/res/layout/activity_section_one.xml" value="0.264" />
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/Project/app/src/main/res/layout/activity_settings.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/Project/app/src/main/res/layout/activity_sign_up.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/Project/app/src/main/res/layout/activity_variables_workout.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/Project/app/src/main/res/layout/fragment_item_list.xml" value="0.35260416666666666" />
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/Project/app/src/main/res/layout/fragment_lesson_layout.xml" value="0.4" />
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/Project/app/src/main/res/layout/fragment_mini_activity1.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/Project/app/src/main/res/layout/fragment_quiz1.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/Project/app/src/main/res/layout/lesson_layout.xml" value="0.35260416666666666" />
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/Project/app/src/main/res/layout/list_lessons.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/Project/app/src/main/res/layout/settings_activity.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/Project/app/src/main/res/layout/test_.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/Project/app/src/main/res/layout/test_variables.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/Project/app/src/main/res/layout/toolbar.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/Project/app/src/main/res/menu/menu_main.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/Project/app/src/main/res/xml/preferences.xml" value="0.4" />
+        <entry key="..\:/Users/Fraser/AndroidStudioProjects/Project/app/src/main/res/xml/root_preferences.xml" value="0.25416666666666665" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.4" />
+      </ProjectState>
+    </option>
+  </component>
+</project>

@@ -1,0 +1,175 @@
+<resources>
+    <string name="app_name">Project</string>
+    <string name="Dev_Ethos">Dev-Ethos</string>
+    <string name="Email_or_username">Email or Username</string>
+    <string name="Password">Password</string>
+    <string name="Forgot_Password">Forgot Password/Username?</string>
+    <string name="Sign_Up">Get started</string>
+    <string name="Login">Login</string>
+    <string name="think">Think like a </string>
+    <string name="developer">developer</string>
+    <string name="directory">directory</string>
+    <string name="settings">settings</string>
+    <string name="profile">profile</string>
+    <string name="help">help</string>
+    <string name="Home">home</string>
+    <string name="support">support</string>
+    <string name="lesson_2_DATA_TYPES">DATA TYPES</string>
+    <string name="lesson_1_VARIABLES">VARIABLES</string>
+    <string name="lesson_3_OPERATORS">OPERATORS</string>
+    <string name="lesson_4_strings">STRINGS</string>
+    <string name="TEST">TEST</string>
+    <string name="nxt">NEXT</string>
+    <string name="bck">BACK</string>
+    <string name="equal">=</string>
+    <string name="submit">SUBMIT</string>
+    <string name="DATA">SECTION ONE: DATA</string>
+    <string name="test_time">Click next to continue to the lesson activity</string>
+    <string name="hyperlink"><a href="https://www.geeksforgeeks.org/">geeksforgeeks.org</a></string>
+
+    <string name="username">username</string>
+
+
+    <string name="lesson1.1">
+LESSON OBJECTIVES:\nWhat is a variable\nHow to assign a variable\nHow to use a variable\nNaming conventions
+</string>
+    <string name="lesson1.2">Coding , in essence, involves writing instructions for your computer,
+        which in turn are applied to different types of data.
+</string>
+    <string name="lesson1.3">But how do we store and access this data?
+         Through the use of a Variable.
+</string>
+    <string name="lesson1.4">A Variable is a container. It contains a value of a type of data and
+        a name which we use to recognise it and refer to it throughout our code.
+</string>
+    <string name="lesson1.5">a variable holds a value and has a name.</string>
+    <string name="lesson1.6">We declare and initialize a variable in a statement with a name on
+        the left-hand side, an equal sign in the middle and then the value we wish to hold.
+</string>
+    <string name="lesson1.7">Variables are an important tool that let us easily re-use and access values throughout our code.</string>
+    <string name="lesson1.8">Once we have a variable name we can call it again and again in our code. This
+Reduces the tedium of writing out values repeatedly, especially if they are complicated values, a variable reduces the chance of error.
+</string>
+    <string name="lesson1.9">A variable name also gives us context. A variable name is like a label, and a good one can tell us exactly what a value represents.
+</string>
+    <string name="lesson1.10">In python we start Variable names with a letter or underscore.
+        They typically should contain no special characters. Conventionally they are snake_case and all lower case.
+</string>
+    <string name="lesson1.11">Once we have declared and initialized a variable, we can easily change its value at any time.
+</string>
+    <string name="lesson1.12">We can pass a new value to the variable, or copy the value of one variable to another.
+</string>
+    <string name="lesson1.13">Depending on the data held inside a variable, we can use operations to modify it or assign a
+Variable to hold the result of an operation.
+</string>
+    <string name="lesson1.14">Importantly we must re-assign the variable if we wish to change its value, merely acting on a variable will not change the variable’s contents unless we cast it back on, or assign it to another
+Variable if we want to keep the new value.
+</string>
+    <string name="lesson1.15">A variable allows us to effectively work with dynamic data in our
+        program and re-use values without having to repeatedly re-write them. A variable gives
+        context to the data being used in the code, making it easily more readable for other viewers.
+    </string>
+    <string name="lesson1.16">In this lesson we learnt: \nWhat is a variable \nHow to assign a variable \nHow to use a variable \nNaming conventions
+</string>
+
+    <string name="lesson2.1">Lesson objectives
+	\nWhat are data types
+	\nPrimitive data types
+	\nType casting
+    </string>
+    <string name="lesson2.2">We\'ve seen how to use a variable, but what exactly can contain inside of them?</string>
+    <string name="lesson2.3">Data in programming is information, and is categorized in data types. The type of the data tells us its behaviors, what values it encompases and what we can do with it.
+</string>
+    <string name="lesson2.4">Every programming language has its own syntax and conventions for organising data into data types. For most programming languages, there is a group of data types called the primitives, that represent the basic building blocks of programming.
+
+</string>
+    <string name="lesson2.5">These primitives define the most basic elements of the code such as numbers or characters. Most programming languages have them built in and readily available for use.</string>
+    <string name="lesson2.6">In PYTHON we have several commonly used data types that represent numerical and non-numerical data. </string>
+    <string name="lesson2.7">We have Int for use with whole numbers and Float to represent any floating point number with a decimal.
+</string>
+    <string name="lesson2.8"> For text, we have Strings. This is a sequence of unicode characters encased within single quote marks that represents a word or group of words.
+</string>
+    <string name="lesson2.9">Another key data type is Boolean. This data type represents binary values of true or false. We will see later how boolean logic is fundamental in introducing decisions into our code.
+</string>
+    <string name="lesson2.10">Data types have different rules depending on the programming language we are using.
+</string>
+    <string name="lesson2.11"> in PYTHON we have dynamic typing. This means that as well as being able to change and modify the values of our variables we can also change the data type of the variable. </string>
+    <string name="lesson2.12">This means python expects a variable to contain any kind of data and we can at any time reassign a new value to a variable that is of a completely different type.
+</string>
+    <string name="lesson2.13">We can also convert a value into a representation of itself in another data type. To do this we write the data name on the right hand side of the assignment and pass in the value or variable in parenthesis directly afterwards.
+</string>
+    <string name="lesson2.14">In this lesson we learnt
+\nWhat are data types
+	\nPrimitive data types
+	\nType casting
+</string>
+    <string name="lesson3.1">Objectives:
+	\nWhat are operators
+	\nWhat are they used for
+	\nCommon operators
+    </string>
+    <string name="lesson3.2">The two most basic elements of programming are the variables, the containers containing the data we want to work with, and the operations our code performs with the data.
+        In this lesson we will take a brief look at operations by looking at some of the most common operators for making calculations and comparing values.
+</string>
+    <string name="lesson3.3">In most programming languages, we have symbols and characters available for use in our code that represents arithmetic calculations.
+</string>
+    <string name="lesson3.4">The most basic of these will already be familiar to most, such as + for addition and - for subtraction.
+</string>
+    <string name="lesson3.5">And they will work as expected. The computer will perform the relevant calculation on numerical data.
+</string>
+    <string name="lesson3.6">Other common operators include * for multiplication, / for division and % for modulo.
+</string>
+    <string name="lesson3.7">In PYTHON division will always result in a floating point number.
+</string>
+    <string name="lesson3.8">The computer will follow conventions of mathematics, including the order of operations PEMDAS(Parentheses, Exponents, Multiplication/Division, Addition/Subtraction).
+</string>
+    <string name="lesson3.9">We can use variables with arithmetic operators, as long as the data contained within them is an expected numerical type of data.
+</string>
+    <string name="lesson3.10">Another set of commonly used operators are the comparison symbols \U+003C, >, == for less-than, greater-than or equals.
+</string>
+    <string name="lesson3.11">These symbols will compare values on either side of the symbol, and evaluate whether the statement as a whole is correct, the output of which will be a boolean of either true or false.
+</string>
+    <string name="lesson3.12">So the expression 4 \U+003C 5 is a correct statement as the value of four is less than the value of five and so the statement as a whole evaluates as a True boolean.
+</string>
+    <string name="lesson3.13">The expression 10 > 12 is not correct, as 10 is not a greater value than 12 and so the statement as a whole evaluates as a False boolean.
+</string>
+    <string name="lesson3.14">We use two equal signs instead of one to differentiate from the single use for assigning variables. This operator will evaluate as True if both sides of its statement hold the same value.
+</string>
+    <string name="lesson3.15">In this lesson we learnt
+	\nWhat are operators
+	\nWhat are they used for
+	\nCommon operators
+</string>
+
+    <string name="lesson4.1">PLACEHOLDER.4</string>
+
+    <string name="lesson5.1">PLACEHOLDER.5</string>
+
+    <string name="lesson6.1">PLACEHOLDER.6</string>
+
+    <string name="lesson7.1">PLACEHOLDER.7</string>
+
+    <string name="lesson8.1">PLACEHOLDER.8</string>
+
+    <string name="lesson9.1">PLACEHOLDER.9</string>
+
+    <string name="lesson10.1">PLACEHOLDER.10</string>
+
+    <string name="lesson11.1">PLACEHOLDER.11</string>
+
+    <string name="lesson12.1">PLACEHOLDER.12</string>
+
+
+    <string name="title_activity_categories">CategoriesActivity</string>
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <string-array
+        name="additional_resources">
+        <item><a href="https://www.geeksforgeeks.org/">geeksforgeeks.org</a></item>
+        <item>https://www.google.com/</item>
+    </string-array>
+
+
+</resources>

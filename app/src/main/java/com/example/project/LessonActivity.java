@@ -2,6 +2,7 @@ package com.example.project;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -22,33 +23,25 @@ public class LessonActivity extends AppCompatActivity {
     private int lessonChoice;
     private int lessonCounter;
     private Lesson lesson;
+    private LessonPage lessonPage;
+    private ViewPager2 viewPager;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lesson_layout);
+        lessonPage = new LessonPage();
         lesson = new Lesson();
         lessonCounter = 0;
         lessonImage = (ImageView) findViewById(R.id.lessonImage);
-        lessonTxt1 = (TextView) findViewById(R.id.lessonTxt1);
-        lessonTxt2 = (TextView) findViewById(R.id.lessonTxt2);
-        lessonTxt3 = (TextView) findViewById(R.id.lessonTxt3);
-        nextButton = (Button) findViewById(R.id.nextButton);
-        nextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                nextButton();
-            }
-        });
-        prevButton = (Button) findViewById(R.id.prevButton);
-        prevButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) { previousButton(); }
-        });
         Intent intent = getIntent();
         lessonChoice = intent.getIntExtra("lessonChoice",1);
         lesson.chooseLesson(lessonChoice);
+        LessonPageAdapter lessonPageAdapter = new LessonPageAdapter(LessonPage.variables);
+        viewPager = findViewById(R.id.pager);
+        viewPager.setAdapter(lessonPageAdapter);
+
 
 
 
@@ -116,23 +109,6 @@ public class LessonActivity extends AppCompatActivity {
             lessonTxt1.setText(lesson.thisLessonText.get(lessonCounter));
             lessonCounter++;
         }
-    }
-
-    public void previousButton() {
-
-        if (lessonCounter == 0) {
-
-            Intent intent = new Intent(this, LessonsListActivity.class);
-            startActivity(intent);
-        }
-        else {
-            lastStep();
-        }
-
-    }
-
-    public void lastStep() {
-
     }
 
 

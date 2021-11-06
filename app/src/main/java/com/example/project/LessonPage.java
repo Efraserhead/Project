@@ -9,21 +9,21 @@ public class LessonPage {
 
     public static final LessonPage[] variables = {
             new LessonPage(R.string.lesson1_1,R.drawable.brain_2),
-            new LessonPage(R.string.lesson1_2, 1),
-            new LessonPage(R.string.lesson1_3,1),
-            new LessonPage(R.string.lesson1_4,1),
-            new LessonPage(R.string.lesson1_5,1),
-            new LessonPage(R.string.lesson1_6,1),
-            new LessonPage(R.string.lesson1_7,1),
-            new LessonPage(R.string.lesson1_8,1),
-            new LessonPage(R.string.lesson1_9,1),
-            new LessonPage(R.string.lesson1_10,1),
-            new LessonPage(R.string.lesson1_11,1),
-            new LessonPage(R.string.lesson1_12,1),
-            new LessonPage(R.string.lesson1_13,1),
-            new LessonPage(R.string.lesson1_14,1),
-            new LessonPage(R.string.lesson1_15,1),
-            new LessonPage(R.string.lesson1_16,1)};
+            new LessonPage(R.string.lesson1_2, R.drawable.brain_2),
+            new LessonPage(R.string.lesson1_3,R.drawable.brain_2),
+            new LessonPage(R.string.lesson1_4,R.drawable.brain_2),
+            new LessonPage(R.string.lesson1_5,R.drawable.brain_2),
+            new LessonPage(R.string.lesson1_6,R.drawable.brain_2),
+            new LessonPage(R.string.lesson1_7,R.drawable.brain_2),
+            new LessonPage(R.string.lesson1_8,R.drawable.brain_2),
+            new LessonPage(R.string.lesson1_9,R.drawable.brain_2),
+            new LessonPage(R.string.lesson1_10,R.drawable.brain_2),
+            new LessonPage(R.string.lesson1_11,R.drawable.brain_2),
+            new LessonPage(R.string.lesson1_12,R.drawable.brain_2),
+            new LessonPage(R.string.lesson1_13,R.drawable.brain_2),
+            new LessonPage(R.string.lesson1_14,R.drawable.brain_2),
+            new LessonPage(R.string.lesson1_15,R.drawable.brain_2),
+            new LessonPage(R.string.lesson1_16,R.drawable.brain_2)};
 
     public LessonPage(){}
 

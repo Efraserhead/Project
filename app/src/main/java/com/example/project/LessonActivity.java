@@ -12,9 +12,7 @@ import android.widget.Button;
 
 public class LessonActivity extends AppCompatActivity {
 
-    private Button finishButton;
     private int lessonChoice;
-    private int lessonCounter;
     private int lessonSize;
     private LessonData lessonData;
     private LessonData[] lesson;
@@ -36,10 +34,9 @@ public class LessonActivity extends AppCompatActivity {
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
-                if(lessonCounter==lessonSize-1) {
+                if(position==lessonSize-1) {
                     finish();
                 }
-                lessonCounter++;
                 super.onPageSelected(position);
             }
         });
@@ -60,7 +57,7 @@ public class LessonActivity extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             dialogInterface.dismiss();
-
+                            startTest();
 
                         }
                     })

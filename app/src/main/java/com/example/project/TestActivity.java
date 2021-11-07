@@ -23,18 +23,18 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 
-public class QuizActivity extends AppCompatActivity {
+public class TestActivity extends AppCompatActivity {
 
     private SQLiteDatabase db;
     private int lessonChoice;
-    private int quizCounter;
+    private int testCounter;
     private int score;
     private int lessonPass;
     private TextView questionText;
     private RadioGroup radioAnswers;
     private RadioButton answer1,answer2,answer3;
     private Button submit;
-    private ArrayList<QuizQuestion> quizQuestions = new ArrayList<>();
+    private ArrayList<Question> questions = new ArrayList<>();
 
 
 
@@ -71,12 +71,12 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     public void nextQuestion() {
-        if (quizCounter < quizQuestions.size()) {
+        if (testCounter < questions.size()) {
             radioAnswers.clearCheck();
-            questionText.setText(quizQuestions.get(quizCounter).getQuestion());
-            answer1.setText(quizQuestions.get(quizCounter).getAnswer1());
-            answer2.setText(quizQuestions.get(quizCounter).getAnswer2());
-            answer3.setText(quizQuestions.get(quizCounter).getAnswer3());
+            questionText.setText(questions.get(testCounter).getQuestion());
+            answer1.setText(questions.get(testCounter).getAnswer1());
+            answer2.setText(questions.get(testCounter).getAnswer2());
+            answer3.setText(questions.get(testCounter).getAnswer3());
         }
         else {
             radioAnswers.clearCheck();
@@ -90,7 +90,7 @@ public class QuizActivity extends AppCompatActivity {
     public void submitAnswer() {
 
          if (radioAnswers.getCheckedRadioButtonId() == -1) {
-             if (quizCounter >= quizQuestions.size()) {
+             if (testCounter >= questions.size()) {
                  endTest();
              }
              else {
@@ -104,10 +104,10 @@ public class QuizActivity extends AppCompatActivity {
              RadioButton selectedButton = findViewById(radioAnswers.getCheckedRadioButtonId());
              int selectedAnswer = 1;
              selectedAnswer += radioAnswers.indexOfChild(selectedButton);
-             int correctAnswer = quizQuestions.get(quizCounter).getCorrectAnswer();
+             int correctAnswer = questions.get(testCounter).getCorrectAnswer();
              if(selectedAnswer == correctAnswer) {
                  score++;
-                 quizCounter++;
+                 testCounter++;
                  nextQuestion();
                  Toast toast = Toast.makeText(this,
                          "correct!",
@@ -115,7 +115,7 @@ public class QuizActivity extends AppCompatActivity {
                  toast.show();
              }
              else {
-                 quizCounter++;
+                 testCounter++;
                  nextQuestion();
                  Toast toast = Toast.makeText(this,
                          "incorrect",
@@ -146,7 +146,7 @@ public class QuizActivity extends AppCompatActivity {
 
     public void loadQuizQuestions() {
         try {
-            SQLiteOpenHelper projectDatabaseHelper = new ProjectDatabaseHelper(QuizActivity.this);
+            SQLiteOpenHelper projectDatabaseHelper = new ProjectDatabaseHelper(TestActivity.this);
             db = projectDatabaseHelper.getReadableDatabase();
             Cursor cursor = db.query(Contract.QuizTable.TABLE_NAME,new String[] {Contract.QuizTable.COLUMN_QUESTION,
             Contract.QuizTable.COLUMN_ANSWER1,Contract.QuizTable.COLUMN_ANSWER2,Contract.QuizTable.COLUMN_ANSWER3,
@@ -154,19 +154,19 @@ public class QuizActivity extends AppCompatActivity {
             null,null);
            if (cursor.moveToFirst()) {
                 do {
-                   QuizQuestion question = new QuizQuestion(cursor.getString(0),cursor.getString(1)
+                   Question question = new Question(cursor.getString(0),cursor.getString(1)
                             ,cursor.getString(2),cursor.getString(3),cursor.getInt(4));
-                    quizQuestions.add(question);
+                    questions.add(question);
                 }while(cursor.moveToNext());
             }
             cursor.close();
             db.close();
-            questionText.setText(quizQuestions.get(0).getQuestion());
-            answer1.setText(quizQuestions.get(0).getAnswer1());
-            answer2.setText(quizQuestions.get(0).getAnswer2());
-            answer3.setText(quizQuestions.get(0).getAnswer3());
+            questionText.setText(questions.get(0).getQuestion());
+            answer1.setText(questions.get(0).getAnswer1());
+            answer2.setText(questions.get(0).getAnswer2());
+            answer3.setText(questions.get(0).getAnswer3());
         }  catch(SQLiteException e) {
-            Toast toast = Toast.makeText(QuizActivity.this,
+            Toast toast = Toast.makeText(TestActivity.this,
                     "Database unavailable4",
                     Toast.LENGTH_SHORT);
             toast.show();

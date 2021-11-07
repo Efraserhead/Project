@@ -7,16 +7,15 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 
 public class LessonActivity extends AppCompatActivity {
 
     private Button finishButton;
     private int lessonChoice;
+    private int lessonCounter;
+    private int lessonSize;
     private LessonData lessonData;
     private LessonData[] lesson;
     private ViewPager2 viewPager;
@@ -33,9 +32,21 @@ public class LessonActivity extends AppCompatActivity {
         LessonPageAdapter lessonPageAdapter = new LessonPageAdapter(lesson);
         viewPager = findViewById(R.id.pager);
         viewPager.setAdapter(lessonPageAdapter);
+        lessonSize= viewPager.getAdapter().getItemCount();
+        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                if(lessonCounter==lessonSize-1) {
+                    finish();
+                }
+                lessonCounter++;
+                super.onPageSelected(position);
+            }
+        });
+}
 
 
-    }
+
 
 
 
@@ -49,7 +60,7 @@ public class LessonActivity extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             dialogInterface.dismiss();
-                            finishLesson();
+
 
                         }
                     })
@@ -58,21 +69,8 @@ public class LessonActivity extends AppCompatActivity {
         }
 
 
-        ViewPager2.OnPageChangeCallback pageChangeCallback = new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-                if(lesson.length == position) {
-
-                }
-            }
-        };
-
-
-
-
-    public void finishLesson() {
-        Intent intent = new Intent(this, QuizActivity.class);
+    public void startTest() {
+        Intent intent = new Intent(this, TestActivity.class);
         intent.putExtra("lessonChoice",lessonChoice);
         startActivity(intent);
 

@@ -1,6 +1,6 @@
 package com.example.project;
 
-public class QuizQuestion {
+public class Question {
 
 
     private String question;
@@ -11,7 +11,7 @@ public class QuizQuestion {
     private int lessonNumber;
 
 
-    public QuizQuestion(String question, String answer1, String answer2, String answer3, int correctAnswer) {
+    public Question(String question, String answer1, String answer2, String answer3, int correctAnswer) {
         this.question = question;
         this.answer1 = answer1;
         this.answer2 = answer2;

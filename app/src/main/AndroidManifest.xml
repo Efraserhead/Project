@@ -32,7 +32,7 @@
             android:name=".LessonsListActivity"
             android:exported="true" />
         <activity
-            android:name=".QuizActivity"
+            android:name=".TestActivity"
             android:exported="true" />
         <activity
             android:name=".LessonActivity"

@@ -7,7 +7,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
+
 
 
 public class LessonActivity extends AppCompatActivity {
@@ -48,12 +48,16 @@ public class LessonActivity extends AppCompatActivity {
 
 
     public void finish() {
-
-
-            new AlertDialog.Builder(this)
+        new AlertDialog.Builder(this)
                     .setTitle("Lesson finished")
                     .setMessage("click continue to check your understanding")
-                    .setPositiveButton("continue", new DialogInterface.OnClickListener() {
+                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+
+                    }
+                }).setPositiveButton("continue", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             dialogInterface.dismiss();

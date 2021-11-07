@@ -8,17 +8,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.view.menu.MenuView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
-
 class LessonPageAdapter extends RecyclerView.Adapter<LessonPageAdapter.ViewHolder>{
 
-    private LessonPage[] pages;
+    private LessonData[] pages;
 
-    public LessonPageAdapter(LessonPage[]pages) {
+    public LessonPageAdapter(LessonData[]pages) {
         this.pages = pages;
     }
 

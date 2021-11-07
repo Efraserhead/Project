@@ -12,18 +12,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 
 public class LessonActivity extends AppCompatActivity {
 
-    private ImageView lessonImage;
-    private TextView lessonTxt1, lessonTxt2, lessonTxt3;
-    private Button prevButton, nextButton;
+    private Button finishButton;
     private int lessonChoice;
-    private int lessonCounter;
-    private Lesson lesson;
-    private LessonPage lessonPage;
+    private LessonData lessonData;
+    private LessonData[] lesson;
     private ViewPager2 viewPager;
 
 
@@ -31,28 +26,21 @@ public class LessonActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lesson_layout);
-        lessonPage = new LessonPage();
-        lesson = new Lesson();
-        lessonCounter = 0;
-        lessonImage = (ImageView) findViewById(R.id.lessonImage);
+        lessonData = new LessonData();
         Intent intent = getIntent();
-        lessonChoice = intent.getIntExtra("lessonChoice",1);
-        lesson.chooseLesson(lessonChoice);
-        LessonPageAdapter lessonPageAdapter = new LessonPageAdapter(LessonPage.variables);
+        lessonChoice = intent.getIntExtra("lessonChoice",2);
+        lesson = lessonData.getLesson(lessonChoice);
+        LessonPageAdapter lessonPageAdapter = new LessonPageAdapter(lesson);
         viewPager = findViewById(R.id.pager);
         viewPager.setAdapter(lessonPageAdapter);
 
 
-
-
     }
 
-    public void nextButton() {
 
-        if (lessonCounter < lesson.thisLessonText.size()) {
-            nextStep(); //move through lesson
-        } else {
-            //launch test
+
+    public void finish() {
+
 
             new AlertDialog.Builder(this)
                     .setTitle("Lesson finished")
@@ -68,7 +56,18 @@ public class LessonActivity extends AppCompatActivity {
                     .create().show();
 
         }
-    }
+
+
+        ViewPager2.OnPageChangeCallback pageChangeCallback = new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                if(lesson.length == position) {
+
+                }
+            }
+        };
+
 
 
 
@@ -79,37 +78,7 @@ public class LessonActivity extends AppCompatActivity {
 
     }
 
-    public void nextStep() {
 
-        if ((lessonTxt1.getVisibility() == View.INVISIBLE)
-                & (lessonTxt2.getVisibility() == View.INVISIBLE)
-                & (lessonTxt3.getVisibility() == View.INVISIBLE)) {
-            lessonTxt1.setVisibility(View.VISIBLE);
-            lessonTxt1.setText(lesson.thisLessonText.get(lessonCounter));
-            lessonCounter++;
-        } else if ((lessonTxt1.getVisibility() == View.VISIBLE)
-                & (lessonTxt2.getVisibility() == View.INVISIBLE)
-                & (lessonTxt3.getVisibility() == View.INVISIBLE)) {
-            lessonTxt2.setVisibility(View.VISIBLE);
-            lessonTxt2.setText(lesson.thisLessonText.get(lessonCounter));
-            lessonCounter++;
-        } else if ((lessonTxt1.getVisibility() == View.VISIBLE)
-                & (lessonTxt2.getVisibility() == View.VISIBLE)
-                & (lessonTxt3.getVisibility() == View.INVISIBLE)) {
-            lessonTxt3.setVisibility(View.VISIBLE);
-            lessonTxt3.setText(lesson.thisLessonText.get(lessonCounter));
-            lessonImage.setVisibility(View.VISIBLE);
-            lessonImage.setImageResource(R.drawable.container);
-            lessonCounter++;
-        } else if ((lessonTxt1.getVisibility() == View.VISIBLE)
-                & (lessonTxt2.getVisibility() == View.VISIBLE)
-                & (lessonTxt3.getVisibility() == View.VISIBLE)) {
-            lessonTxt2.setVisibility(View.INVISIBLE);
-            lessonTxt3.setVisibility(View.INVISIBLE);
-            lessonTxt1.setText(lesson.thisLessonText.get(lessonCounter));
-            lessonCounter++;
-        }
-    }
 
 
 }

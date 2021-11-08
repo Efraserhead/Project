@@ -23,10 +23,21 @@ public class LessonActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lesson_layout);
-        lessonData = new LessonData();
         Intent intent = getIntent();
-        lessonChoice = intent.getIntExtra("lessonChoice",2);
-        lesson = lessonData.getLesson(lessonChoice);
+        lessonChoice = intent.getIntExtra("lessonChoice",1);
+        setUpLesson(lessonChoice);
+
+    }
+
+    public void setUpLesson(int lessonChoice) {
+        lessonData = new LessonData();
+        switch (lessonChoice) {
+            case 1:
+                break;
+            case 2:
+                lessonData.setThisLesson(LessonData.variables);
+        }
+        lesson = lessonData.getThisLesson();
         LessonPageAdapter lessonPageAdapter = new LessonPageAdapter(lesson);
         viewPager = findViewById(R.id.pager);
         viewPager.setAdapter(lessonPageAdapter);
@@ -40,9 +51,7 @@ public class LessonActivity extends AppCompatActivity {
                 super.onPageSelected(position);
             }
         });
-}
-
-
+    }
 
 
 
@@ -62,12 +71,11 @@ public class LessonActivity extends AppCompatActivity {
                         public void onClick(DialogInterface dialogInterface, int i) {
                             dialogInterface.dismiss();
                             startTest();
-
                         }
-                    })
-                    .create().show();
+                })
+                .create().show();
 
-        }
+    }
 
 
     public void startTest() {

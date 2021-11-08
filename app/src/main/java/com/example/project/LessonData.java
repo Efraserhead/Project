@@ -26,14 +26,12 @@ public class LessonData {
 
     public LessonData(){}
 
-    public LessonData[] getLesson(int lessonChoice) {
-        switch(lessonChoice) {
-            case 1:
-                break;
-            case 2:
-                thisLesson = variables;
-        }
+    public LessonData[] getThisLesson() {
         return thisLesson;
+    }
+
+    public void setThisLesson(LessonData[] thisLesson) {
+        this.thisLesson = thisLesson;
     }
 
     public LessonData(int stringId, int imageId) {

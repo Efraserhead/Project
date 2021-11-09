@@ -70,7 +70,7 @@ public class ProblemActivity extends AppCompatActivity {
                 do {
                     Problem problem = new Problem(cursor.getInt(0), cursor.getString(1),
                             cursor.getString(2), cursor.getString(3),cursor.getInt(4),cursor.getString(5));
-                    if(!(problem.getGroup()==0)) {
+                    if(!(problem.getLevel()==0)) {
                         Date nextAvailable = sdf.parse(problem.getLastCompleted());
                         if(today.after(nextAvailable) || today.equals(nextAvailable)) {
                         problemsSchedule.add(problem);
@@ -90,7 +90,7 @@ public class ProblemActivity extends AppCompatActivity {
     }
 
     public void submit() {
-        int problemGroup = problemsSchedule.get(problemCounter).getGroup();
+        int problemGroup = problemsSchedule.get(problemCounter).getLevel();
         int problemId = problemsSchedule.get(problemCounter).getId();
         String nextAvailable;
         String answer = answerText.getText().toString().toLowerCase().trim();

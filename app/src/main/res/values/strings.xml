@@ -80,14 +80,14 @@ Variable if we want to keep the new value.
     <string name="lesson2.2">We\'ve seen how to use a variable, but what exactly can contain inside of them?</string>
     <string name="lesson2.3">Data in programming is information, and is categorized in data types. The type of the data tells us its behaviors, what values it encompases and what we can do with it.
 </string>
-    <string name="lesson2.4">Every programming language has its own syntax and conventions for organising data into data types. For most programming languages, there is a group of data types called the primitives, that represent the basic building blocks of programming.
+    <string name="lesson2.4">Every programming language has its own syntax and conventions for organising data into data types. For most programming languages, there is a level of data types called the primitives, that represent the basic building blocks of programming.
 
 </string>
     <string name="lesson2.5">These primitives define the most basic elements of the code such as numbers or characters. Most programming languages have them built in and readily available for use.</string>
     <string name="lesson2.6">In PYTHON we have several commonly used data types that represent numerical and non-numerical data. </string>
     <string name="lesson2.7">We have Int for use with whole numbers and Float to represent any floating point number with a decimal.
 </string>
-    <string name="lesson2.8"> For text, we have Strings. This is a sequence of unicode characters encased within single quote marks that represents a word or group of words.
+    <string name="lesson2.8"> For text, we have Strings. This is a sequence of unicode characters encased within single quote marks that represents a word or level of words.
 </string>
     <string name="lesson2.9">Another key data type is Boolean. This data type represents binary values of true or false. We will see later how boolean logic is fundamental in introducing decisions into our code.
 </string>

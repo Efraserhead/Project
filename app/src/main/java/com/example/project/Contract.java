@@ -31,7 +31,7 @@ public class Contract {
         public static final String COLUMN_PROBLEM ="problem";
         public static final String COLUMN_PROBLEM_CODE ="problem_code";
         public static final String COLUMN_ANSWER ="answer";
-        public static final String COLUMN_GROUP ="group";
+        public static final String COLUMN_GROUP ="level";
         public static final String COLUMN_DATE_DONE ="date_done";
         public static final String COLUMN_LESSON_NUMBER ="lesson_number";
 

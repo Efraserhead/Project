@@ -1,7 +1,14 @@
 package com.example.project;
 
+
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "question_table")
 public class Question {
 
+    @PrimaryKey(autoGenerate = true)
+    private int id;
 
     private String question;
     private String answer1;

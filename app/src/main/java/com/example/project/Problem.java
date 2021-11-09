@@ -1,21 +1,28 @@
 package com.example.project;
 
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "problem_table")
 public class Problem {
 
 
     private String problem, answer, problemCode,lastCompleted;
-    private int lessonNo, group, id;
+    private int lessonNo, level;
+
+    @PrimaryKey(autoGenerate = true)
+    private int id;
 
 
     public Problem(int id, String problem, String problemCode, String answer,
-                   int group, String lastCompleted) {
+                   int level, String lastCompleted) {
         this.id = id;
         this.problem = problem;
         this.problemCode = problemCode;
         this.answer = answer;
         this.lastCompleted = lastCompleted;
-        this.group = group;
+        this.level = level;
 
 
     }
@@ -52,12 +59,12 @@ public class Problem {
         this.lessonNo = lessonNo;
     }
 
-    public int getGroup() {
-        return group;
+    public int getLevel() {
+        return level;
     }
 
-    public void setGroup(int group) {
-        this.group = group;
+    public void setLevel(int level) {
+        this.level = level;
     }
 
     public int getId() {

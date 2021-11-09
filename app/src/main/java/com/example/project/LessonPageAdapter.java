@@ -13,9 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 class LessonPageAdapter extends RecyclerView.Adapter<LessonPageAdapter.ViewHolder>{
 
-    private LessonData[] pages;
+    private LessonPage[] pages;
 
-    public LessonPageAdapter(LessonData[]pages) {
+    public LessonPageAdapter(LessonPage[]pages) {
         this.pages = pages;
     }
 

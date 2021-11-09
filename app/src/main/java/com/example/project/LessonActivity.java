@@ -14,8 +14,8 @@ public class LessonActivity extends AppCompatActivity {
 
     private int lessonChoice;
     private int lessonSize;
-    private LessonData lessonData;
-    private LessonData[] lesson;
+    private Lesson lesson;
+    private LessonPage[] lessonPages;
     private ViewPager2 viewPager;
 
 
@@ -26,19 +26,49 @@ public class LessonActivity extends AppCompatActivity {
         Intent intent = getIntent();
         lessonChoice = intent.getIntExtra("lessonChoice",1);
         setUpLesson(lessonChoice);
+        setUpViewPager();
 
     }
 
     public void setUpLesson(int lessonChoice) {
-        lessonData = new LessonData();
         switch (lessonChoice) {
             case 1:
+                lesson.setThisLesson(Lesson.introduction);
                 break;
             case 2:
-                lessonData.setThisLesson(LessonData.variables);
+                lesson.setThisLesson(Lesson.variables);
+            case 3:
+                lesson.setThisLesson(Lesson.dataTypes);
+            case 4:
+                lesson.setThisLesson(Lesson.operators);
+            case 5:
+                lesson.setThisLesson(Lesson.stringsPages);
+            case 6:
+                lesson.setThisLesson(Lesson.controlStructures);
+            case 7:
+                lesson.setThisLesson(Lesson.looping1);
+            case 8:
+                lesson.setThisLesson(Lesson.looping2);
+            case 9:
+                lesson.setThisLesson(Lesson.syntax);
+            case 10:
+                lesson.setThisLesson(Lesson.dataStructures);
+            case 11:
+                lesson.setThisLesson(Lesson.functions1);
+            case 12:
+                lesson.setThisLesson(Lesson.functions2);
+            case 13:
+                lesson.setThisLesson(Lesson.debugging);
+
         }
-        lesson = lessonData.getThisLesson();
-        LessonPageAdapter lessonPageAdapter = new LessonPageAdapter(lesson);
+        lessonPages = lesson.getThisLesson();
+
+    }
+
+
+    public void setUpViewPager() {
+
+        LessonPageAdapter lessonPageAdapter = new LessonPageAdapter(lessonPages);
         viewPager = findViewById(R.id.pager);
         viewPager.setAdapter(lessonPageAdapter);
         lessonSize= viewPager.getAdapter().getItemCount();

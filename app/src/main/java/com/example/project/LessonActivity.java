@@ -10,6 +10,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
+import java.util.Arrays;
+import java.util.List;
 
 
 public class LessonActivity extends AppCompatActivity {
@@ -17,9 +19,10 @@ public class LessonActivity extends AppCompatActivity {
     private int lessonChoice;
     private int lessonSize;
     private Lesson thisLesson;
-    private LessonPage[] lessonPages;
+    private List<LessonPage> lessonPages;
     private ViewPager2 viewPager;
     private LessonViewModel lessonViewModel;
+    private ProjectDatabase db;
 
 
     @Override
@@ -28,7 +31,9 @@ public class LessonActivity extends AppCompatActivity {
         setContentView(R.layout.lesson_layout);
         Intent intent = getIntent();
         lessonChoice = intent.getIntExtra("lessonChoice",1);
-        lessonViewModel = ViewModelProviders.of(this).get(LessonViewModel.class);
+        //lessonViewModel = ViewModelProviders.of(this).get(LessonViewModel.class);
+        //db = ProjectDatabase.getInstance(this);
+        //thisLesson = db.lessonDao().getLesson(lessonChoice);
         thisLesson = new Lesson();
         setThisLesson(lessonChoice);
         setUpViewPager();

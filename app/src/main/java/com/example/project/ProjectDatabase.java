@@ -14,7 +14,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 @Database(entities = {Lesson.class,Problem.class,Question.class},version=1)
 public abstract class ProjectDatabase extends RoomDatabase {
 
-    private static ProjectDatabase instance;
+    private static volatile ProjectDatabase instance;
 
 
     public abstract LessonDao lessonDao();
@@ -39,8 +39,8 @@ public abstract class ProjectDatabase extends RoomDatabase {
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
             new AddAllLessonsAsyncTask(instance).execute();
-            new AddAllQuestionsAsyncTask(instance).execute();
-            new AddAllProblemsAsyncTask(instance).execute();
+            //new AddAllQuestionsAsyncTask(instance).execute();
+           // new AddAllProblemsAsyncTask(instance).execute();
         }
     };
 

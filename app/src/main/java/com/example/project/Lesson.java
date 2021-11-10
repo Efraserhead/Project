@@ -4,6 +4,9 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Entity(tableName = "lesson_table")
 public class Lesson {
 
@@ -15,11 +18,11 @@ public class Lesson {
 
 
     @Ignore
-    private LessonPage[] thisLesson;
+    private List<LessonPage> thisLesson;
 
 
     @Ignore
-    public static final LessonPage[] introduction = {
+    public static final List<LessonPage> introduction = Arrays.asList(
             new LessonPage(R.string.lesson1_1,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_2, R.drawable.brain_2),
             new LessonPage(R.string.lesson1_3,R.drawable.brain_2),
@@ -35,11 +38,12 @@ public class Lesson {
             new LessonPage(R.string.lesson1_13,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_14,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_15,R.drawable.brain_2),
-            new LessonPage(R.string.lesson1_16,R.drawable.brain_2)};
+            new LessonPage(R.string.lesson1_16,R.drawable.brain_2));
+
 
 
     @Ignore
-    public static final LessonPage[] variables = {
+    public static final List<LessonPage> variables = Arrays.asList(
             new LessonPage(R.string.lesson1_1,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_2, R.drawable.brain_2),
             new LessonPage(R.string.lesson1_3,R.drawable.brain_2),
@@ -55,10 +59,11 @@ public class Lesson {
             new LessonPage(R.string.lesson1_13,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_14,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_15,R.drawable.brain_2),
-            new LessonPage(R.string.lesson1_16,R.drawable.brain_2)};
+            new LessonPage(R.string.lesson1_16,R.drawable.brain_2));
+
 
     @Ignore
-    public static final LessonPage[] dataTypes = {
+    public static final List<LessonPage> dataTypes = Arrays.asList(
             new LessonPage(R.string.lesson1_1,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_2, R.drawable.brain_2),
             new LessonPage(R.string.lesson1_3,R.drawable.brain_2),
@@ -74,10 +79,10 @@ public class Lesson {
             new LessonPage(R.string.lesson1_13,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_14,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_15,R.drawable.brain_2),
-            new LessonPage(R.string.lesson1_16,R.drawable.brain_2)};
+            new LessonPage(R.string.lesson1_16,R.drawable.brain_2));
 
     @Ignore
-    public static final LessonPage[] operators = {
+    public static final List<LessonPage> operators = Arrays.asList(
             new LessonPage(R.string.lesson1_1,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_2, R.drawable.brain_2),
             new LessonPage(R.string.lesson1_3,R.drawable.brain_2),
@@ -93,10 +98,10 @@ public class Lesson {
             new LessonPage(R.string.lesson1_13,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_14,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_15,R.drawable.brain_2),
-            new LessonPage(R.string.lesson1_16,R.drawable.brain_2)};
+            new LessonPage(R.string.lesson1_16,R.drawable.brain_2));
 
     @Ignore
-    public static final LessonPage[] stringsPages = {
+    public static final List<LessonPage> stringsPages = Arrays.asList(
             new LessonPage(R.string.lesson1_1,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_2, R.drawable.brain_2),
             new LessonPage(R.string.lesson1_3,R.drawable.brain_2),
@@ -112,10 +117,10 @@ public class Lesson {
             new LessonPage(R.string.lesson1_13,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_14,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_15,R.drawable.brain_2),
-            new LessonPage(R.string.lesson1_16,R.drawable.brain_2)};
+            new LessonPage(R.string.lesson1_16,R.drawable.brain_2));
 
     @Ignore
-    public static final LessonPage[] controlStructures = {
+    public static final List<LessonPage> controlStructures = Arrays.asList(
             new LessonPage(R.string.lesson1_1,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_2, R.drawable.brain_2),
             new LessonPage(R.string.lesson1_3,R.drawable.brain_2),
@@ -131,10 +136,10 @@ public class Lesson {
             new LessonPage(R.string.lesson1_13,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_14,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_15,R.drawable.brain_2),
-            new LessonPage(R.string.lesson1_16,R.drawable.brain_2)};
+            new LessonPage(R.string.lesson1_16,R.drawable.brain_2));
 
     @Ignore
-    public static final LessonPage[] looping1 = {
+    public static final List<LessonPage> looping1 = Arrays.asList(
             new LessonPage(R.string.lesson1_1,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_2, R.drawable.brain_2),
             new LessonPage(R.string.lesson1_3,R.drawable.brain_2),
@@ -150,10 +155,10 @@ public class Lesson {
             new LessonPage(R.string.lesson1_13,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_14,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_15,R.drawable.brain_2),
-            new LessonPage(R.string.lesson1_16,R.drawable.brain_2)};
+            new LessonPage(R.string.lesson1_16,R.drawable.brain_2));
 
     @Ignore
-    public static final LessonPage[] looping2 = {
+    public static final List<LessonPage> looping2 = Arrays.asList(
             new LessonPage(R.string.lesson1_1,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_2, R.drawable.brain_2),
             new LessonPage(R.string.lesson1_3,R.drawable.brain_2),
@@ -169,10 +174,10 @@ public class Lesson {
             new LessonPage(R.string.lesson1_13,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_14,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_15,R.drawable.brain_2),
-            new LessonPage(R.string.lesson1_16,R.drawable.brain_2)};
+            new LessonPage(R.string.lesson1_16,R.drawable.brain_2));
 
     @Ignore
-    public static final LessonPage[] syntax = {
+    public static final List<LessonPage> syntax = Arrays.asList(
             new LessonPage(R.string.lesson1_1,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_2, R.drawable.brain_2),
             new LessonPage(R.string.lesson1_3,R.drawable.brain_2),
@@ -188,11 +193,11 @@ public class Lesson {
             new LessonPage(R.string.lesson1_13,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_14,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_15,R.drawable.brain_2),
-            new LessonPage(R.string.lesson1_16,R.drawable.brain_2)};
+            new LessonPage(R.string.lesson1_16,R.drawable.brain_2));
 
 
     @Ignore
-    public static final LessonPage[] dataStructures = {
+    public static final List<LessonPage> dataStructures = Arrays.asList(
             new LessonPage(R.string.lesson1_1,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_2, R.drawable.brain_2),
             new LessonPage(R.string.lesson1_3,R.drawable.brain_2),
@@ -208,10 +213,10 @@ public class Lesson {
             new LessonPage(R.string.lesson1_13,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_14,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_15,R.drawable.brain_2),
-            new LessonPage(R.string.lesson1_16,R.drawable.brain_2)};
+            new LessonPage(R.string.lesson1_16,R.drawable.brain_2));
 
     @Ignore
-    public static final LessonPage[] functions1 = {
+    public static final List<LessonPage> functions1 = Arrays.asList(
             new LessonPage(R.string.lesson1_1,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_2, R.drawable.brain_2),
             new LessonPage(R.string.lesson1_3,R.drawable.brain_2),
@@ -227,10 +232,10 @@ public class Lesson {
             new LessonPage(R.string.lesson1_13,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_14,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_15,R.drawable.brain_2),
-            new LessonPage(R.string.lesson1_16,R.drawable.brain_2)};
+            new LessonPage(R.string.lesson1_16,R.drawable.brain_2));
 
     @Ignore
-    public static final LessonPage[] functions2 = {
+    public static final List<LessonPage> functions2 = Arrays.asList(
             new LessonPage(R.string.lesson1_1,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_2, R.drawable.brain_2),
             new LessonPage(R.string.lesson1_3,R.drawable.brain_2),
@@ -246,11 +251,11 @@ public class Lesson {
             new LessonPage(R.string.lesson1_13,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_14,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_15,R.drawable.brain_2),
-            new LessonPage(R.string.lesson1_16,R.drawable.brain_2)};
+            new LessonPage(R.string.lesson1_16,R.drawable.brain_2));
 
 
     @Ignore
-    public static final LessonPage[] debugging = {
+    public static final List<LessonPage> debugging = Arrays.asList(
             new LessonPage(R.string.lesson1_1,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_2, R.drawable.brain_2),
             new LessonPage(R.string.lesson1_3,R.drawable.brain_2),
@@ -266,16 +271,15 @@ public class Lesson {
             new LessonPage(R.string.lesson1_13,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_14,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_15,R.drawable.brain_2),
-            new LessonPage(R.string.lesson1_16,R.drawable.brain_2)};
+            new LessonPage(R.string.lesson1_16,R.drawable.brain_2));
 
     public Lesson(){}
 
-
-    public LessonPage[] getThisLesson() {
+    public List<LessonPage> getThisLesson() {
         return thisLesson;
     }
 
-    public void setThisLesson(LessonPage[] thisLesson) {
+    public void setThisLesson(List<LessonPage> thisLesson) {
         this.thisLesson = thisLesson;
     }
 

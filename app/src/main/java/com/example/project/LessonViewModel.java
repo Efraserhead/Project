@@ -4,7 +4,7 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
+
 
 import java.util.List;
 
@@ -15,9 +15,9 @@ public class LessonViewModel extends AndroidViewModel {
     private List<Lesson> categoryLessons;
 
 
-    public LessonViewModel(@NonNull Application application) {
+    public LessonViewModel(@NonNull Application application,int lessonChoice, int categoryChoice) {
         super(application);
-        lessonRepository = new LessonRepository(application);
+        lessonRepository = new LessonRepository(application,lessonChoice,categoryChoice);
 
 
     }

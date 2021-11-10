@@ -17,9 +17,11 @@ public class LessonRepository {
 
 
 
-    public LessonRepository(Application application) {
+    public LessonRepository(Application application, int lessonChoice, int categoryChoice) {
         ProjectDatabase projectDatabase = ProjectDatabase.getInstance(application);
         lessonDao = projectDatabase.lessonDao();
+        categoryLessons = lessonDao.getCategoryLessons(categoryChoice);
+        lesson = lessonDao.getLesson(lessonChoice);
 
 
     }
@@ -38,12 +40,11 @@ public class LessonRepository {
     }
 
     public Lesson getLesson(int lessonChoice) {
-        lesson = lessonDao.getLesson(lessonChoice);
         return lesson;
     }
 
     public List<Lesson> getCategoryLessons(int categoryChoice) {
-        categoryLessons = lessonDao.getCategoryLessons(categoryChoice);
+
         return categoryLessons;
     }
 

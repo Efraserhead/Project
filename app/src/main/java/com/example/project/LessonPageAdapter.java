@@ -11,11 +11,13 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.List;
+
 class LessonPageAdapter extends RecyclerView.Adapter<LessonPageAdapter.ViewHolder>{
 
-    private LessonPage[] pages;
+    private List<LessonPage> pages;
 
-    public LessonPageAdapter(LessonPage[]pages) {
+    public LessonPageAdapter(List<LessonPage> pages) {
         this.pages = pages;
     }
 
@@ -30,17 +32,17 @@ class LessonPageAdapter extends RecyclerView.Adapter<LessonPageAdapter.ViewHolde
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         View lessonView = holder.itemView;
-        Drawable curImage = ContextCompat.getDrawable(lessonView.getContext(),pages[position].getImageId());
+        Drawable curImage = ContextCompat.getDrawable(lessonView.getContext(),pages.get(position).getImageId());
         TextView textView = (TextView) lessonView.findViewById(R.id.lessonText);
         ImageView imageView = (ImageView) lessonView.findViewById(R.id.lessonImage);
         imageView.setImageDrawable(curImage);
-        textView.setText(pages[position].getStringId());
+        textView.setText(pages.get(position).getStringId());
 
     }
 
     @Override
     public int getItemCount() {
-        return pages.length;
+        return pages.size();
     }
 
 

@@ -1,6 +1,6 @@
 package com.example.project;
 
-import androidx.lifecycle.LiveData;
+
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -8,6 +8,7 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import java.util.List;
+
 
 @Dao
 public interface LessonDao {
@@ -23,10 +24,10 @@ public interface LessonDao {
 
 
     @Query("SELECT * FROM lesson_table WHERE id=:lessonChoice")
-    LiveData<Lesson> getLesson(int lessonChoice);
+    Lesson getLesson(int lessonChoice);
 
     @Query("SELECT * FROM lesson_table WHERE level=:level")
-    LiveData<List<Lesson>> getCategoryLessons(int level);
+    List<Lesson> getCategoryLessons(int level);
 
 
 

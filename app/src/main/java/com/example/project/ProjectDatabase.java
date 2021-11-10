@@ -7,8 +7,10 @@ import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+@TypeConverters(LessonPagesConverter.class)
 @Database(entities = {Lesson.class,Problem.class,Question.class},version=1)
 public abstract class ProjectDatabase extends RoomDatabase {
 
@@ -51,19 +53,19 @@ public abstract class ProjectDatabase extends RoomDatabase {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            lessonDao.insert(new Lesson("getting started", 1, 0,Lesson.introduction));
-            lessonDao.insert(new Lesson("variables", 2, 0,Lesson.variables));
-            lessonDao.insert(new Lesson("data types", 2, 0,Lesson.dataTypes));
-            lessonDao.insert(new Lesson("operators", 2, 0,Lesson.operators));
-            lessonDao.insert(new Lesson("strings", 2, 0,Lesson.stringsPages));
-            lessonDao.insert(new Lesson("control structures", 3, 0,Lesson.controlStructures));
-            lessonDao.insert(new Lesson("looping 1", 3, 0,Lesson.looping1));
-            lessonDao.insert(new Lesson("looping 2", 3, 0,Lesson.looping2));
-            lessonDao.insert(new Lesson("syntax", 3, 0,Lesson.syntax));
-            lessonDao.insert(new Lesson("data structures", 4, 0,Lesson.dataStructures));
-            lessonDao.insert(new Lesson("functions 1", 4, 0,Lesson.functions1));
-            lessonDao.insert(new Lesson("functions 2", 4, 0,Lesson.functions2));
-            lessonDao.insert(new Lesson("debugging", 4, 0,Lesson.debugging));
+            lessonDao.insert(new Lesson("getting started", 1, 0));
+            lessonDao.insert(new Lesson("variables", 2, 0));
+            lessonDao.insert(new Lesson("data types", 2, 0));
+            lessonDao.insert(new Lesson("operators", 2, 0));
+            lessonDao.insert(new Lesson("strings", 2, 0));
+            lessonDao.insert(new Lesson("control structures", 3, 0));
+            lessonDao.insert(new Lesson("looping 1", 3, 0));
+            lessonDao.insert(new Lesson("looping 2", 3, 0));
+            lessonDao.insert(new Lesson("syntax", 3, 0));
+            lessonDao.insert(new Lesson("data structures", 4, 0));
+            lessonDao.insert(new Lesson("functions 1", 4, 0));
+            lessonDao.insert(new Lesson("functions 2", 4, 0));
+            lessonDao.insert(new Lesson("debugging", 4, 0));
 
             return null;
         }

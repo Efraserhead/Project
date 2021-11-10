@@ -12,26 +12,10 @@ public class LessonRepository {
 
     private LessonDao lessonDao;
 
-    LiveData<Lesson> lesson;
-    LiveData<List<Lesson>> categoryLessons;
+    Lesson lesson;
+    List<Lesson> categoryLessons;
 
-    public static final LessonPage[] variables = {
-            new LessonPage(R.string.lesson1_1,R.drawable.brain_2),
-            new LessonPage(R.string.lesson1_2, R.drawable.brain_2),
-            new LessonPage(R.string.lesson1_3,R.drawable.brain_2),
-            new LessonPage(R.string.lesson1_4,R.drawable.brain_2),
-            new LessonPage(R.string.lesson1_5,R.drawable.brain_2),
-            new LessonPage(R.string.lesson1_6,R.drawable.brain_2),
-            new LessonPage(R.string.lesson1_7,R.drawable.brain_2),
-            new LessonPage(R.string.lesson1_8,R.drawable.brain_2),
-            new LessonPage(R.string.lesson1_9,R.drawable.brain_2),
-            new LessonPage(R.string.lesson1_10,R.drawable.brain_2),
-            new LessonPage(R.string.lesson1_11,R.drawable.brain_2),
-            new LessonPage(R.string.lesson1_12,R.drawable.brain_2),
-            new LessonPage(R.string.lesson1_13,R.drawable.brain_2),
-            new LessonPage(R.string.lesson1_14,R.drawable.brain_2),
-            new LessonPage(R.string.lesson1_15,R.drawable.brain_2),
-            new LessonPage(R.string.lesson1_16,R.drawable.brain_2)};
+
 
     public LessonRepository(Application application) {
         ProjectDatabase projectDatabase = ProjectDatabase.getInstance(application);
@@ -53,12 +37,12 @@ public class LessonRepository {
         new DeleteLessonAsyncTask(lessonDao).execute(lesson);
     }
 
-    public LiveData<Lesson> getLesson(int lessonChoice) {
+    public Lesson getLesson(int lessonChoice) {
         lesson = lessonDao.getLesson(lessonChoice);
         return lesson;
     }
 
-    public LiveData<List<Lesson>> getCategoryLessons(int categoryChoice) {
+    public List<Lesson> getCategoryLessons(int categoryChoice) {
         categoryLessons = lessonDao.getCategoryLessons(categoryChoice);
         return categoryLessons;
     }

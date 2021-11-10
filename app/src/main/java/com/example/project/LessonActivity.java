@@ -2,6 +2,8 @@ package com.example.project;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.DialogInterface;
@@ -14,9 +16,10 @@ public class LessonActivity extends AppCompatActivity {
 
     private int lessonChoice;
     private int lessonSize;
-    private Lesson lesson;
+    private Lesson thisLesson;
     private LessonPage[] lessonPages;
     private ViewPager2 viewPager;
+    private LessonViewModel lessonViewModel;
 
 
     @Override
@@ -25,45 +28,47 @@ public class LessonActivity extends AppCompatActivity {
         setContentView(R.layout.lesson_layout);
         Intent intent = getIntent();
         lessonChoice = intent.getIntExtra("lessonChoice",1);
-        setUpLesson(lessonChoice);
+        lessonViewModel = ViewModelProviders.of(this).get(LessonViewModel.class);
+        thisLesson = new Lesson();
+        setThisLesson(lessonChoice);
         setUpViewPager();
 
     }
 
-    public void setUpLesson(int lessonChoice) {
+    public void setThisLesson(int lessonChoice) {
         switch (lessonChoice) {
             case 1:
-                lesson.setThisLesson(Lesson.introduction);
+                thisLesson.setThisLesson(Lesson.introduction);
                 break;
             case 2:
-                lesson.setThisLesson(Lesson.variables);
+                thisLesson.setThisLesson(Lesson.variables);
             case 3:
-                lesson.setThisLesson(Lesson.dataTypes);
+                thisLesson.setThisLesson(Lesson.dataTypes);
             case 4:
-                lesson.setThisLesson(Lesson.operators);
+                thisLesson.setThisLesson(Lesson.operators);
             case 5:
-                lesson.setThisLesson(Lesson.stringsPages);
+                thisLesson.setThisLesson(Lesson.stringsPages);
             case 6:
-                lesson.setThisLesson(Lesson.controlStructures);
+                thisLesson.setThisLesson(Lesson.controlStructures);
             case 7:
-                lesson.setThisLesson(Lesson.looping1);
+                thisLesson.setThisLesson(Lesson.looping1);
             case 8:
-                lesson.setThisLesson(Lesson.looping2);
+                thisLesson.setThisLesson(Lesson.looping2);
             case 9:
-                lesson.setThisLesson(Lesson.syntax);
+                thisLesson.setThisLesson(Lesson.syntax);
             case 10:
-                lesson.setThisLesson(Lesson.dataStructures);
+                thisLesson.setThisLesson(Lesson.dataStructures);
             case 11:
-                lesson.setThisLesson(Lesson.functions1);
+                thisLesson.setThisLesson(Lesson.functions1);
             case 12:
-                lesson.setThisLesson(Lesson.functions2);
+                thisLesson.setThisLesson(Lesson.functions2);
             case 13:
-                lesson.setThisLesson(Lesson.debugging);
+                thisLesson.setThisLesson(Lesson.debugging);
 
         }
-        lessonPages = lesson.getThisLesson();
-
+        lessonPages = thisLesson.getThisLesson();
     }
+
 
 
     public void setUpViewPager() {

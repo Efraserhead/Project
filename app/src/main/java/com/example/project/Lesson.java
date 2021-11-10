@@ -3,9 +3,6 @@ package com.example.project;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
-import androidx.room.TypeConverters;
-
-import java.util.List;
 
 @Entity(tableName = "lesson_table")
 public class Lesson {
@@ -17,9 +14,9 @@ public class Lesson {
     private String name;
 
 
-
-    @TypeConverters(LessonPagesConverter.class)
+    @Ignore
     private LessonPage[] thisLesson;
+
 
     @Ignore
     public static final LessonPage[] introduction = {
@@ -271,12 +268,21 @@ public class Lesson {
             new LessonPage(R.string.lesson1_15,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_16,R.drawable.brain_2)};
 
+    public Lesson(){}
 
-    public Lesson(String name,int level,int pass, LessonPage[] thisLesson) {
+
+    public LessonPage[] getThisLesson() {
+        return thisLesson;
+    }
+
+    public void setThisLesson(LessonPage[] thisLesson) {
+        this.thisLesson = thisLesson;
+    }
+
+    public Lesson(String name, int level, int pass) {
         this.level = level;
         this.pass = pass;
         this.name = name;
-        this.thisLesson = thisLesson;
     }
 
     public int getId() {
@@ -311,12 +317,5 @@ public class Lesson {
         this.name = name;
     }
 
-    public LessonPage[] getThisLesson() {
-        return thisLesson;
-    }
-
-    public void setThisLesson(LessonPage[] thisLesson) {
-        this.thisLesson = thisLesson;
-    }
 }
 

@@ -15,9 +15,9 @@ public class LessonViewModel extends AndroidViewModel {
     private List<Lesson> categoryLessons;
 
 
-    public LessonViewModel(@NonNull Application application,int lessonChoice, int categoryChoice) {
+    public LessonViewModel(@NonNull Application application) {
         super(application);
-        lessonRepository = new LessonRepository(application,lessonChoice,categoryChoice);
+        lessonRepository = new LessonRepository(application);
 
 
     }

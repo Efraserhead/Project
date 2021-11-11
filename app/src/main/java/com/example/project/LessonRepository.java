@@ -17,29 +17,32 @@ public class LessonRepository {
 
 
 
-    public LessonRepository(Application application, int lessonChoice, int categoryChoice) {
+    public LessonRepository(Application application) {
         ProjectDatabase projectDatabase = ProjectDatabase.getInstance(application);
         lessonDao = projectDatabase.lessonDao();
-        categoryLessons = lessonDao.getCategoryLessons(categoryChoice);
-        lesson = lessonDao.getLesson(lessonChoice);
+
 
 
     }
 
     public void Insert(Lesson lesson) {
+
         new InsertLessonAsyncTask(lessonDao).execute(lesson);
 
     }
 
     public void Update(Lesson lesson) {
+
         new UpdateLessonAsyncTask(lessonDao).execute(lesson);
     }
 
     public void Delete(Lesson lesson) {
+
         new DeleteLessonAsyncTask(lessonDao).execute(lesson);
     }
 
     public Lesson getLesson(int lessonChoice) {
+
         return lesson;
     }
 

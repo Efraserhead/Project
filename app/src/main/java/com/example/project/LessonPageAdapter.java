@@ -11,13 +11,14 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 class LessonPageAdapter extends RecyclerView.Adapter<LessonPageAdapter.ViewHolder>{
 
-    private List<LessonPage> pages;
+    private ArrayList<LessonPage> pages;
 
-    public LessonPageAdapter(List<LessonPage> pages) {
+    public LessonPageAdapter(ArrayList<LessonPage> pages) {
         this.pages = pages;
     }
 

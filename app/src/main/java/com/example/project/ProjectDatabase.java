@@ -17,6 +17,7 @@ public abstract class ProjectDatabase extends RoomDatabase {
     private static volatile ProjectDatabase instance;
 
 
+
     public abstract LessonDao lessonDao();
 
     public abstract ProblemDao problemDao();
@@ -29,6 +30,7 @@ public abstract class ProjectDatabase extends RoomDatabase {
                     ProjectDatabase.class, "project_database")
                     .fallbackToDestructiveMigration()
                     .addCallback(roomCallback)
+                    .allowMainThreadQueries()
                     .build();
         }
         return instance;
@@ -39,8 +41,8 @@ public abstract class ProjectDatabase extends RoomDatabase {
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
             new AddAllLessonsAsyncTask(instance).execute();
-            //new AddAllQuestionsAsyncTask(instance).execute();
-           // new AddAllProblemsAsyncTask(instance).execute();
+            new AddAllQuestionsAsyncTask(instance).execute();
+            new AddAllProblemsAsyncTask(instance).execute();
         }
     };
 
@@ -53,19 +55,20 @@ public abstract class ProjectDatabase extends RoomDatabase {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            lessonDao.insert(new Lesson("getting started", 1, 0));
-            lessonDao.insert(new Lesson("variables", 2, 0));
-            lessonDao.insert(new Lesson("data types", 2, 0));
-            lessonDao.insert(new Lesson("operators", 2, 0));
-            lessonDao.insert(new Lesson("strings", 2, 0));
-            lessonDao.insert(new Lesson("control structures", 3, 0));
-            lessonDao.insert(new Lesson("looping 1", 3, 0));
-            lessonDao.insert(new Lesson("looping 2", 3, 0));
-            lessonDao.insert(new Lesson("syntax", 3, 0));
-            lessonDao.insert(new Lesson("data structures", 4, 0));
-            lessonDao.insert(new Lesson("functions 1", 4, 0));
-            lessonDao.insert(new Lesson("functions 2", 4, 0));
-            lessonDao.insert(new Lesson("debugging", 4, 0));
+
+            lessonDao.insert(new Lesson("getting started", 1, 0,Lesson.introduction));
+            lessonDao.insert(new Lesson("variables", 2, 0,Lesson.variables));
+            lessonDao.insert(new Lesson("data types", 2, 0,Lesson.dataTypes));
+            lessonDao.insert(new Lesson("operators", 2, 0,Lesson.operators));
+            lessonDao.insert(new Lesson("strings", 2, 0,Lesson.stringsPages));
+            lessonDao.insert(new Lesson("control structures", 3, 0,Lesson.controlStructures));
+            lessonDao.insert(new Lesson("looping 1", 3, 0,Lesson.looping1));
+            lessonDao.insert(new Lesson("looping 2", 3, 0,Lesson.looping2));
+            lessonDao.insert(new Lesson("syntax", 3, 0,Lesson.syntax));
+            lessonDao.insert(new Lesson("data structures", 4, 0,Lesson.dataStructures));
+            lessonDao.insert(new Lesson("functions 1", 4, 0,Lesson.functions1));
+            lessonDao.insert(new Lesson("functions 2", 4, 0,Lesson.functions2));
+            lessonDao.insert(new Lesson("debugging", 4, 0,Lesson.debugging));
 
             return null;
         }

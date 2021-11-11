@@ -1,28 +1,27 @@
 package com.example.project;
 
+import androidx.room.TypeConverter;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class LessonPagesConverter {
 
-
-    public static String fromLessonPages(LessonPage[] lessonPages) {
+    @TypeConverter
+    public static String fromLessonPages(ArrayList<LessonPage> lessonPages) {
         Gson gson = new Gson();
-        Type type = new TypeToken<List<LessonPage>>() {
-        }.getType();
-        String json = gson.toJson(lessonPages, type);
+        String json = gson.toJson(lessonPages);
         return json;
     }
 
-    public static List<LessonPage> toLessonPages(String lessonPages) {
-        Gson gson = new Gson();
-        Type type = new TypeToken<List<LessonPage>>(){
-        }.getType();
-        List<LessonPage> lessonPageList = gson.fromJson(lessonPages, type);
-        return lessonPageList;
+    @TypeConverter
+    public static ArrayList<LessonPage> toLessonPages(String lessonPages) {
+        Type listType = new TypeToken<ArrayList<LessonPage>>() {}.getType();
+        return new Gson().fromJson(lessonPages, listType);
     }
 }

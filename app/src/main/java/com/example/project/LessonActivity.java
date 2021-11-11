@@ -34,30 +34,6 @@ public class LessonActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    public void onBackPressed() {
-
-
-        new AlertDialog.Builder(this)
-                .setTitle("Exit Lesson?")
-                .setMessage("click exit to leave to lesson")
-                .setNegativeButton("exit", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                        LessonActivity.super.onBackPressed();
-
-                    }
-                }).setPositiveButton("cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
-
-            }
-        })
-                .create().show();
-
-    }
 
 
 
@@ -69,7 +45,7 @@ public class LessonActivity extends AppCompatActivity {
         LessonPageAdapter lessonPageAdapter = new LessonPageAdapter(lessonPages);
         viewPager = findViewById(R.id.pager);
         viewPager.setAdapter(lessonPageAdapter);
-        lessonSize = Objects.requireNonNull(viewPager.getAdapter()).getItemCount();
+        lessonSize = viewPager.getAdapter().getItemCount();
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {

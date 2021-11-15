@@ -64,9 +64,52 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, LessonActivity.class);
             intent.putExtra("lessonChoice",1);
             startActivity(intent);
+            ProjectDatabase.getInstance(this).lessonDao().insert(new Lesson("getting started", 1, 0, Lesson.introduction));
+            ProjectDatabase.getInstance(this).lessonDao().insert(new Lesson("variables", 2, 0,Lesson.variables));
+            ProjectDatabase.getInstance(this).lessonDao().insert(new Lesson("data types", 2, 0,Lesson.dataTypes));
         }
+
+        ProjectDatabase.getInstance(this).lessonDao().insert(new Lesson());
+        ProjectDatabase.getInstance(this).lessonDao().insert(new Lesson());
+        ProjectDatabase.getInstance(this).lessonDao().insert(new Lesson());
+        ProjectDatabase.getInstance(this).lessonDao().insert(new Lesson());
+        ProjectDatabase.getInstance(this).lessonDao().insert(new Lesson());
+        ProjectDatabase.getInstance(this).lessonDao().insert(new Lesson());
+        ProjectDatabase.getInstance(this).lessonDao().insert(new Lesson());
+        ProjectDatabase.getInstance(this).lessonDao().insert(new Lesson());
+        ProjectDatabase.getInstance(this).lessonDao().insert(new Lesson());
+        ProjectDatabase.getInstance(this).lessonDao().insert(new Lesson());
     }
 
+/*
+    public void makeLesson() {
+ProjectDatabase.getInstance(this).lessonDao().insert(new Lesson());
+        ProjectDatabase.getInstance(this).lessonDao().insert(new Lesson());
+        ProjectDatabase.getInstance(this).lessonDao().insert(new Lesson());
+        ProjectDatabase.getInstance(this).lessonDao().insert(new Lesson());
+        ProjectDatabase.getInstance(this).lessonDao().insert(new Lesson());
+        ProjectDatabase.getInstance(this).lessonDao().insert(new Lesson());
+        ProjectDatabase.getInstance(this).lessonDao().insert(new Lesson());
+        ProjectDatabase.getInstance(this).lessonDao().insert(new Lesson());
+        ProjectDatabase.getInstance(this).lessonDao().insert(new Lesson());
+        ProjectDatabase.getInstance(this).lessonDao().insert(new Lesson());
+    }
+
+        new Lesson("getting started", 1, 0, Lesson.introduction);
+        new Lesson("variables", 2, 0,Lesson.variables);
+        new Lesson("data types", 2, 0,Lesson.dataTypes);
+        new Lesson( "operators", 2, 0);
+        new Lesson("strings", 2, 0);
+        insertLesson("control structures", 3, 0);
+        insertLesson("looping 1", 3, 0);
+        insertLesson("looping 2", 3, 0);
+        insertLesson("syntax", 3, 0);
+        insertLesson("data structures", 4, 0);
+        insertLesson("functions 1", 4, 0);
+        insertLesson("functions 2", 4, 0);
+        insertLesson("debugging", 4, 0);
+
+    } **/
 }
 
 

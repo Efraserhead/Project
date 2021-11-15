@@ -3,26 +3,35 @@ package com.example.project;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
+import java.util.Date;
 
 @Entity(tableName = "problem_table")
 public class Problem {
 
 
-    private String problem, answer, problemCode,lastCompleted;
+    private String problem, answer, problemCode;
+
+    @TypeConverters(DateConverter.class)
+    private Date nextAvailable;
+
+
     private int lessonNo, level;
 
     @PrimaryKey(autoGenerate = true)
     private int id;
 
 
-    public Problem(int id, String problem, String problemCode, String answer,
-                   int level, String lastCompleted) {
-        this.id = id;
+    public Problem(String problem, String problemCode, String answer,
+                   int level, Date nextAvailable) {
+
         this.problem = problem;
         this.problemCode = problemCode;
         this.answer = answer;
-        this.lastCompleted = lastCompleted;
         this.level = level;
+        this.nextAvailable = nextAvailable;
+
 
 
     }
@@ -75,11 +84,11 @@ public class Problem {
         this.id = id;
     }
 
-    public String getLastCompleted() {
-        return lastCompleted;
+    public Date getNextAvailable() {
+        return nextAvailable;
     }
 
-    public void setLastCompleted(String lastCompleted) {
-        this.lastCompleted = lastCompleted;
+    public void setNextAvailable(Date nextAvailable) {
+        this.nextAvailable = nextAvailable;
     }
 }

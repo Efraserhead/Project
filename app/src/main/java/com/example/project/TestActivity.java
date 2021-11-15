@@ -4,13 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
 
-import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
@@ -25,26 +20,22 @@ import java.util.ArrayList;
 
 public class TestActivity extends AppCompatActivity {
 
-    private SQLiteDatabase db;
     private int lessonChoice;
     private int testCounter;
     private int score;
     private int lessonPass;
     private TextView questionText;
     private RadioGroup radioAnswers;
-    private RadioButton answer1,answer2,answer3;
+    private RadioButton answer1;
+    private RadioButton answer2;
+    private RadioButton answer3;
     private Button submit;
-    private ArrayList<Question> questions = new ArrayList<>();
+    private final ArrayList<Question> questions = new ArrayList<>();
+    private final ArrayList<Problem> problems = new ArrayList<>();
+    private Lesson thisLesson;
 
 
 
-
-
-    @Override
-    protected void onDestroy() {
-
-        super.onDestroy();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,26 +56,30 @@ public class TestActivity extends AppCompatActivity {
             }
         });
 
-        loadQuizQuestions();
+        loadTestQuestions();
         getLessonPass();
+        nextQuestion();
 
     }
 
     public void nextQuestion() {
         if (testCounter < questions.size()) {
+            String thisQuestion = questions.get(testCounter).getQuestion();
+            String thisAnswer1 = questions.get(testCounter).getAnswerId0();
+            String thisAnswer2 = questions.get(testCounter).getAnswerId1();
+            String thisAnswer3 = questions.get(testCounter).getAnswerId2();
             radioAnswers.clearCheck();
-            questionText.setText(questions.get(testCounter).getQuestion());
-            answer1.setText(questions.get(testCounter).getAnswer1());
-            answer2.setText(questions.get(testCounter).getAnswer2());
-            answer3.setText(questions.get(testCounter).getAnswer3());
+            questionText.setText(thisQuestion);
+            answer1.setText(thisAnswer1);
+            answer2.setText(thisAnswer2);
+            answer3.setText(thisAnswer3);
         }
-        else {
             radioAnswers.clearCheck();
             questionText.setText(R.string.hyperlink);
             questionText.setMovementMethod(LinkMovementMethod.getInstance());
             radioAnswers.setVisibility(View.INVISIBLE);
             submit.setText("FINISH");
-        }
+
     }
 
     public void submitAnswer() {
@@ -93,19 +88,16 @@ public class TestActivity extends AppCompatActivity {
              if (testCounter >= questions.size()) {
                  endTest();
              }
-             else {
                  Toast toast = Toast.makeText(this,
                          "select one answer",
                          Toast.LENGTH_SHORT);
                  toast.show();
-             }
+
          }
-         else {
-             RadioButton selectedButton = findViewById(radioAnswers.getCheckedRadioButtonId());
-             int selectedAnswer = 1;
-             selectedAnswer += radioAnswers.indexOfChild(selectedButton);
-             int correctAnswer = questions.get(testCounter).getCorrectAnswer();
-             if(selectedAnswer == correctAnswer) {
+        RadioButton selectedButton = findViewById(radioAnswers.getCheckedRadioButtonId());
+        int correctAnswerId = questions.get(testCounter).getCorrectAnswerId();
+        int selectedAnswerId = radioAnswers.indexOfChild(selectedButton);
+         if(selectedAnswerId == correctAnswerId) {
                  score++;
                  testCounter++;
                  nextQuestion();
@@ -122,7 +114,7 @@ public class TestActivity extends AppCompatActivity {
                          Toast.LENGTH_SHORT);
                  toast.show();
              }
-         }
+
     }
 
             public void endTest() {
@@ -144,96 +136,35 @@ public class TestActivity extends AppCompatActivity {
              startActivity(intent);
          }
 
-    public void loadQuizQuestions() {
-        try {
-            SQLiteOpenHelper projectDatabaseHelper = new ProjectDatabaseHelper(TestActivity.this);
-            db = projectDatabaseHelper.getReadableDatabase();
-            Cursor cursor = db.query(Contract.QuizTable.TABLE_NAME,new String[] {Contract.QuizTable.COLUMN_QUESTION,
-            Contract.QuizTable.COLUMN_ANSWER1,Contract.QuizTable.COLUMN_ANSWER2,Contract.QuizTable.COLUMN_ANSWER3,
-            Contract.QuizTable.COLUMN_CORRECT_ANSWER},Contract.QuizTable.COLUMN_LESSON_NUMBER + "=?",new String[] {Integer.toString(lessonChoice)},null,
-            null,null);
-           if (cursor.moveToFirst()) {
-                do {
-                   Question question = new Question(cursor.getString(0),cursor.getString(1)
-                            ,cursor.getString(2),cursor.getString(3),cursor.getInt(4));
-                    questions.add(question);
-                }while(cursor.moveToNext());
-            }
-            cursor.close();
-            db.close();
-            questionText.setText(questions.get(0).getQuestion());
-            answer1.setText(questions.get(0).getAnswer1());
-            answer2.setText(questions.get(0).getAnswer2());
-            answer3.setText(questions.get(0).getAnswer3());
-        }  catch(SQLiteException e) {
-            Toast toast = Toast.makeText(TestActivity.this,
-                    "Database unavailable4",
-                    Toast.LENGTH_SHORT);
-            toast.show();
-        }
+    public void loadTestQuestions() {
+
+        questions.addAll(ProjectDatabase.getInstance(this).questionDao().getLessonQuestions(lessonChoice));
+
+
     }
 
     public void updateLesson() {
         if (lessonPass == 0) {
-            try {
-                SQLiteOpenHelper lessonDatabaseHelper = new ProjectDatabaseHelper(this);
-                db = lessonDatabaseHelper.getWritableDatabase();
-                ContentValues passValues = new ContentValues();
-                passValues.put("PASS", 1);
-                db.update(Contract.LessonTable.TABLE_NAME, passValues, Contract.LessonTable._ID + "= ?",
-                        new String[]{Integer.toString(lessonChoice)});
-                updateProblemsGroup();
-                db.close();
-                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-                sharedPreferences.edit().putInt("lessonProgress",+1).apply();
-            } catch (SQLiteException e) {
-                Toast toast2 = Toast.makeText(this,
-                        "Database unavailable3",
-                        Toast.LENGTH_SHORT);
-                toast2.show();
-            }
-
-
+            thisLesson.setPass(1);
+            ProjectDatabase.getInstance(this).lessonDao().update(thisLesson);
+            //updateProblemsGroup();
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+            sharedPreferences.edit().putInt("lessonProgress",+1).apply();
         }
     }
 
     public void updateProblemsGroup() {
-        try {
-            SQLiteOpenHelper lessonDatabaseHelper = new ProjectDatabaseHelper(this);
-            db = lessonDatabaseHelper.getWritableDatabase();
-            ContentValues groupValues = new ContentValues();
-            groupValues.put(Contract.ProblemSchedule.COLUMN_GROUP, 1);
-            db.update(Contract.ProblemSchedule.TABLE_NAME, groupValues,
-                    Contract.ProblemSchedule.COLUMN_LESSON_NUMBER + "= ?",
-                    new String[]{Integer.toString(lessonChoice)});
-            db.close();
-        } catch (SQLiteException e) {
-            Toast toast2 = Toast.makeText(this,
-                    "Database unavailable2",
-                    Toast.LENGTH_SHORT);
-            toast2.show();
-        }
+
+            problems.addAll(ProjectDatabase.getInstance(this).problemDao().getLessonProblems(0,lessonChoice));
+            for(Problem problem: problems) {
+                problem.setLevel(1);
+                ProjectDatabase.getInstance(this).problemDao().insert(problem);
+            }
     }
 
     public void getLessonPass() {
-
-        try {
-            SQLiteOpenHelper lessonDatabaseHelper = new ProjectDatabaseHelper(this);
-            db = lessonDatabaseHelper.getReadableDatabase();
-            Cursor cursor = db.query(Contract.LessonTable.TABLE_NAME, new String[]
-                    {Contract.LessonTable.COLUMN_PASS},Contract.LessonTable._ID + "=?",
-                    new String[] {Integer.toString(lessonChoice)}, null, null, null);
-            if (cursor.moveToFirst()) {
-                lessonPass = cursor.getInt(0);
-            }
-            cursor.close();
-            db.close();
-        }catch (SQLiteException e) {
-            Toast toast2 = Toast.makeText(this,
-                    "Database unavailable1",
-                    Toast.LENGTH_SHORT);
-            toast2.show();
-        }
+        thisLesson = ProjectDatabase.getInstance(this).lessonDao().getLesson(lessonChoice);
+        lessonPass = thisLesson.getPass();
     }
 
 

@@ -2,6 +2,7 @@ package com.example.project;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
 import android.content.DialogInterface;
@@ -27,16 +28,16 @@ public class LessonActivity extends AppCompatActivity {
         setContentView(R.layout.lesson_layout);
         Intent intent = getIntent();
         lessonChoice = intent.getIntExtra("lessonChoice",1);
-        Lesson thisLesson = ProjectDatabase.getInstance(this).lessonDao().getLesson(lessonChoice);
-        lessonPages = thisLesson.getThisLesson();
+        setUpLesson();
         setUpViewPager();
 
     }
 
 
-
-
-
+    public void setUpLesson() {
+        Lesson thisLesson = ProjectDatabase.getInstance(this).lessonDao().getLesson(lessonChoice);
+        lessonPages = thisLesson.getThisLesson();
+    }
 
 
 
@@ -50,6 +51,7 @@ public class LessonActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 if(position==lessonSize-1) {
+
                     finish();
 
                 }
@@ -87,16 +89,6 @@ public class LessonActivity extends AppCompatActivity {
         Intent intent = new Intent(this, TestActivity.class);
         intent.putExtra("lessonChoice",lessonChoice);
         startActivity(intent);
-
-    }
-
-    public void lessonEndFragment() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        DialogFragment dialogFragment =
-                new DialogFragment().newInstance("click ok to check your understanding",
-                        "Lesson finished");
-        dialogFragment.show(fragmentManager,"lesson end");
-
 
     }
 

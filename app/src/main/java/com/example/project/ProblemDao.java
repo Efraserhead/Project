@@ -1,12 +1,16 @@
 package com.example.project;
 
 
+import android.database.Cursor;
+
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
+import androidx.room.Ignore;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
+
 
 import java.util.List;
 
@@ -17,6 +21,9 @@ public interface ProblemDao {
     @Insert
     void insert(Problem problem);
 
+    @Insert
+    void insertAll(Problem...problems);
+
     @Delete
     void delete(Problem problem);
 
@@ -25,10 +32,13 @@ public interface ProblemDao {
 
 
     @Query("SELECT * FROM problem_table WHERE lessonNo=:lessonNo AND level=:level")
-    LiveData<List<Problem>> getLessonProblems(int level, int lessonNo);
+    List<Problem> getLessonProblems(int level, int lessonNo);
+
+    @Query("SELECT * FROM problem_table WHERE level>0")
+    List<Problem> getUnlockedProblems();
 
     @Query("SELECT * FROM problem_table")
-    LiveData<List<Problem>> getProblems();
+    List<Problem> getProblems();
 
 
 }

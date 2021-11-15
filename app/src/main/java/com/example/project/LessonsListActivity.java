@@ -4,20 +4,18 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
-import android.database.sqlite.SQLiteOpenHelper;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 public class LessonsListActivity extends AppCompatActivity {
     int categoryChoice;
     TextView categoryTitle;
     Button lessonButton1,lessonButton2,lessonButton3,lessonButton4;
-    SQLiteDatabase db;
+
 
 
     @Override
@@ -70,7 +68,6 @@ public class LessonsListActivity extends AppCompatActivity {
                 lessonButton4.setVisibility(View.INVISIBLE);
                 break;
             case 2:
-
                 categoryTitle = findViewById(R.id.categoryTitle);
                 categoryTitle.setText("SECTION ONE: DATA");
                 lessonButton1.setText("VARIABLES");
@@ -102,31 +99,21 @@ public class LessonsListActivity extends AppCompatActivity {
     }
 
     public void lessonUnlock() {
-        try {
-            SQLiteOpenHelper projectDatabaseHelper = new ProjectDatabaseHelper(this);
-            db = projectDatabaseHelper.getReadableDatabase();
-            Cursor cursor = db.query("LESSON",new String[] {"_id","PASS"},
-                    "LEVEL=?", new String[] {Integer.toString(categoryChoice)},null,null,null);
+
+            Cursor cursor = ProjectDatabase.getInstance(this).lessonDao().getCategoryLessons(categoryChoice);
             if (cursor.moveToFirst()) {
-                boolean passCheck = (cursor.getInt(1)==1);
+                boolean passCheck = (cursor.getInt(3)==1);
                 lessonButton2.setEnabled(passCheck);
                 if (cursor.moveToNext()) {
-                    passCheck = (cursor.getInt(1)==1);
+                    passCheck = (cursor.getInt(3)==1);
                     lessonButton3.setEnabled(passCheck);
                     if(cursor.moveToNext()) {
-                        passCheck = (cursor.getInt(1)==1);
+                        passCheck = (cursor.getInt(3)==1);
                         lessonButton4.setEnabled(passCheck);
                     }
                 }
             }
             cursor.close();
-            db.close();
-        }  catch(SQLiteException e) {
-            Toast toast = Toast.makeText(this,
-                    "Database unavailable",
-                    Toast.LENGTH_SHORT);
-            toast.show();
-        }
     }
 
     public void lessonChoiceOne() {

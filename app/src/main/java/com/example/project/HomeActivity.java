@@ -91,8 +91,6 @@ TextView username,lessonProgress;
                 Intent intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
                 return true;
-            case R.id.directoryTab:
-                return true;
             case R.id.exitTab:
                 return true;
                 default:

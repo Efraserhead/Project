@@ -7,6 +7,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
+
 import java.util.List;
 
 @Dao
@@ -23,7 +24,7 @@ public interface QuestionDao {
 
 
     @Query("SELECT * FROM question_table WHERE lessonNumber=:lessonNumber")
-    LiveData<List<Question>> getLessonQuestions(int lessonNumber);
+    List<Question> getLessonQuestions(int lessonNumber);
 
 
 }

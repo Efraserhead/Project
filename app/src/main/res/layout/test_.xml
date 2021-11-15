@@ -53,7 +53,7 @@
             android:id="@+id/radio_answer1"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:text="answer1"
+            android:text="answerId0"
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="495dp" />
 
@@ -61,7 +61,7 @@
             android:id="@+id/radio_answer2"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
-            android:text="answer2"
+            android:text="answerId1"
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="495dp" />
 
@@ -69,7 +69,7 @@
             android:id="@+id/radio_answer3"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
-            android:text="answer3"
+            android:text="answerId2"
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="495dp" />
 

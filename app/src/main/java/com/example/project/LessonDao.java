@@ -1,6 +1,8 @@
 package com.example.project;
 
 
+import android.database.Cursor;
+
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -16,6 +18,7 @@ public interface LessonDao {
     @Insert
     void insert(Lesson lesson);
 
+
     @Delete
     void delete(Lesson lesson);
 
@@ -27,7 +30,7 @@ public interface LessonDao {
     Lesson getLesson(int lessonChoice);
 
     @Query("SELECT * FROM lesson_table WHERE level=:level")
-    List<Lesson> getCategoryLessons(int level);
+    Cursor getCategoryLessons(int level);
 
 
 

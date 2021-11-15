@@ -11,19 +11,20 @@ public class Question {
     private int id;
 
     private String question;
-    private String answer1;
-    private String answer2;
-    private String answer3;
-    private int correctAnswer;
+    private String answerId0;
+    private String answerId1;
+    private String answerId2;
+    private int correctAnswerId;
     private int lessonNumber;
 
 
-    public Question(String question, String answer1, String answer2, String answer3, int correctAnswer) {
+    public Question(String question, String answerId0, String answerId1, String answerId2, int correctAnswerId, int lessonNumber) {
         this.question = question;
-        this.answer1 = answer1;
-        this.answer2 = answer2;
-        this.answer3 = answer3;
-        this.correctAnswer = correctAnswer;
+        this.answerId0 = answerId0;
+        this.answerId1 = answerId1;
+        this.answerId2 = answerId2;
+        this.correctAnswerId = correctAnswerId;
+        this.lessonNumber = lessonNumber;
 
     }
 
@@ -43,36 +44,36 @@ public class Question {
         this.question = question;
     }
 
-    public String getAnswer1() {
-        return answer1;
+    public String getAnswerId0() {
+        return answerId0;
     }
 
-    public void setAnswer1(String answer1) {
-        this.answer1 = answer1;
+    public void setAnswerId0(String answerId0) {
+        this.answerId0 = answerId0;
     }
 
-    public String getAnswer2() {
-        return answer2;
+    public String getAnswerId1() {
+        return answerId1;
     }
 
-    public void setAnswer2(String answer2) {
-        this.answer2 = answer2;
+    public void setAnswerId1(String answerId1) {
+        this.answerId1 = answerId1;
     }
 
-    public String getAnswer3() {
-        return answer3;
+    public String getAnswerId2() {
+        return answerId2;
     }
 
-    public void setAnswer3(String answer3) {
-        this.answer3 = answer3;
+    public void setAnswerId2(String answerId2) {
+        this.answerId2 = answerId2;
     }
 
-    public int getCorrectAnswer() {
-        return correctAnswer;
+    public int getCorrectAnswerId() {
+        return correctAnswerId;
     }
 
-    public void setCorrectAnswer(int correctAnswer) {
-        this.correctAnswer = correctAnswer;
+    public void setCorrectAnswerId(int correctAnswerId) {
+        this.correctAnswerId = correctAnswerId;
     }
 
     public int getLessonNumber() {

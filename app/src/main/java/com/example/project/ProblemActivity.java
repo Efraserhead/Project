@@ -3,12 +3,10 @@ package com.example.project;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.ContentValues;
+
 import android.content.Intent;
-import android.database.Cursor;
+
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -17,7 +15,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -26,7 +23,6 @@ import java.util.Locale;
 
 public class ProblemActivity extends AppCompatActivity {
 
-    private SQLiteDatabase db;
     private TextView codeText;
     private TextView problem;
     private EditText answerText;
@@ -57,42 +53,26 @@ public class ProblemActivity extends AppCompatActivity {
             }
         });
         loadSchedule();
-        loadNextProblem();
+
     }
 
 
     public void loadSchedule() {
-        try {
-            SQLiteOpenHelper projectDatabaseHelper = new ProjectDatabaseHelper(this);
-            db = projectDatabaseHelper.getReadableDatabase();
-            Cursor cursor = db.rawQuery("SELECT * FROM " + Contract.ProblemSchedule.TABLE_NAME,null);
-            if (cursor.moveToFirst()) {
-                do {
-                    Problem problem = new Problem(cursor.getInt(0), cursor.getString(1),
-                            cursor.getString(2), cursor.getString(3),cursor.getInt(4),cursor.getString(5));
-                    if(!(problem.getLevel()==0)) {
-                        Date nextAvailable = sdf.parse(problem.getLastCompleted());
-                        if(today.after(nextAvailable) || today.equals(nextAvailable)) {
-                        problemsSchedule.add(problem);
-                        }
-                    }
-                }
-                while (cursor.moveToNext());
+
+        problemsSchedule.addAll(ProjectDatabase.getInstance(this).problemDao().getUnlockedProblems());
+        for (Problem problem : problemsSchedule) {
+            Date nextAvailable = problem.getNextAvailable();
+            if (!(today.after(nextAvailable) || today.equals(nextAvailable))) {
+                problemsSchedule.remove(problem);
             }
-
-        }catch (SQLiteException | ParseException e) {
-            Toast toast2 = Toast.makeText(this,
-                    "Database unavailable",
-
-                    Toast.LENGTH_SHORT);
-            toast2.show();
         }
+        loadNextProblem();
     }
 
+
+
     public void submit() {
-        int problemGroup = problemsSchedule.get(problemCounter).getLevel();
-        int problemId = problemsSchedule.get(problemCounter).getId();
-        String nextAvailable;
+        int problemLevel = problemsSchedule.get(problemCounter).getLevel();
         String answer = answerText.getText().toString().toLowerCase().trim();
         String correctAnswer = problemsSchedule.get(problemCounter).getAnswer();
         if (TextUtils.isEmpty(answer)) {
@@ -100,11 +80,12 @@ public class ProblemActivity extends AppCompatActivity {
                     "please enter your answer",
                     Toast.LENGTH_SHORT);
             toast.show();
-        }
-            else{
-
+        } else {
                 if (answer.compareTo(correctAnswer) == 0) {
-                    switch (problemGroup) {
+                    Toast toast2 = Toast.makeText(this,
+                        "CORRECT!", Toast.LENGTH_SHORT);
+                    toast2.show();
+                    switch (problemLevel) {
                         case 1:
                             calendar.add(5, 3);
                         case 2:
@@ -116,43 +97,42 @@ public class ProblemActivity extends AppCompatActivity {
                         case 5:
                             calendar.add(5, 30);
                     }
-                    Toast toast2 = Toast.makeText(this,
-                                "CORRECT!",
-
-                            Toast.LENGTH_SHORT);
-                    toast2.show();
-                    if (problemGroup < 5) {
-                        problemGroup++;
+                    if (problemLevel < 5) {
+                        problemsSchedule.get(problemCounter).setLevel(+1);
                     }
-              } else {
-                  switch (problemGroup) {
-                      case 1:
-                          calendar.add(5, 1);
-                      case 2:
-                        calendar.add(5, 1);
-                    case 3:
-                        calendar.add(5, 3);
-                    case 4:
-                        calendar.add(5, 7);
-                    case 5:
-                        calendar.add(5, 14);
-                }
+                }   else {
                 Toast toast3 = Toast.makeText(this,
                         "Incorrect",
                         Toast.LENGTH_SHORT);
                 toast3.show();
-                if (problemGroup > 1) {
-                    problemGroup--;
+                    switch (problemLevel) {
+                        case 1:
+                            calendar.add(5, 1);
+                        case 2:
+                            calendar.add(5, 1);
+                        case 3:
+                            calendar.add(5, 3);
+                        case 4:
+                            calendar.add(5, 7);
+                        case 5:
+                            calendar.add(5, 14);
+                    }
+                if (problemLevel > 1) {
+                    problemsSchedule.get(problemCounter).setLevel(-1);
                 }
             }
-            nextAvailable = sdf.format(calendar.getTime());
-            updateProblem(nextAvailable, problemGroup, problemId);
-            loadNextProblem();
-
+                problemsSchedule.get(problemCounter).setNextAvailable(calendar.getTime());
+                ProjectDatabase.getInstance(this).problemDao().update(problemsSchedule.get(problemCounter));
+                calendar = Calendar.getInstance();
+                problemCounter++;
+                loadNextProblem();
         }
+
+
     }
 
     public void loadNextProblem() {
+
         if(problemCounter < problemsSchedule.size()) {
             codeText.setText(problemsSchedule.get(problemCounter).getProblemCode());
             problem.setText(problemsSchedule.get(problemCounter).getProblem());
@@ -170,27 +150,8 @@ public class ProblemActivity extends AppCompatActivity {
 
 
 
-    public void updateProblem(String nextAvailable, int problemGroup, int problemId) {
-        try{
-            SQLiteOpenHelper lessonDatabaseHelper = new ProjectDatabaseHelper(this);
-            db = lessonDatabaseHelper.getWritableDatabase();
-            ContentValues nextAvailableValues = new ContentValues();
-            nextAvailableValues.put(Contract.ProblemSchedule.COLUMN_DATE_DONE,nextAvailable);
-            ContentValues groupValues = new ContentValues();
-            groupValues.put(Contract.ProblemSchedule.COLUMN_GROUP,problemGroup);
-            db.update(Contract.ProblemSchedule.TABLE_NAME,groupValues,Contract.ProblemSchedule._ID + "=?",
-                    new String[] {Integer.toString(problemId)});
-            db.update(Contract.ProblemSchedule.TABLE_NAME,nextAvailableValues,Contract.ProblemSchedule._ID + "=?",
-                    new String[] {Integer.toString(problemId)});
-            db.close();
-        }catch (SQLiteException e) {
-            Toast toast2 = Toast.makeText(this,
-                    "Database unavailable",
 
-                    Toast.LENGTH_SHORT);
-            toast2.show();
-        }
-    }
+
 
 
 

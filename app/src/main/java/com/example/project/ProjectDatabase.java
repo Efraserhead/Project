@@ -69,7 +69,7 @@ public abstract class ProjectDatabase extends RoomDatabase {
             lessonDao.insert(new Lesson("functions 2", 4, 0, Lesson.functions2));
             lessonDao.insert(new Lesson("debugging", 4, 0, Lesson.debugging));
 
-            return null;
+           return null;
         }
     }
 

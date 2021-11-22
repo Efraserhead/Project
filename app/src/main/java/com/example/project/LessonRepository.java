@@ -43,7 +43,7 @@ public class LessonRepository {
 
     public Lesson getLesson(int lessonChoice) {
 
-        return lesson;
+        return lesson = lessonDao.getLesson(lessonChoice);
     }
 
     public List<Lesson> getCategoryLessons(int categoryChoice) {

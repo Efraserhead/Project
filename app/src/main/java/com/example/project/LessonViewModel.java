@@ -36,8 +36,9 @@ public class LessonViewModel extends AndroidViewModel {
     }
 
     public Lesson getLesson(int lessonChoice) {
-        lesson = lessonRepository.getLesson(lessonChoice);
-        return lesson;
+
+        return lesson = lessonRepository.getLesson(lessonChoice);
+
     }
 
     public List<Lesson> getCategoryLessons(int categoryChoice) {

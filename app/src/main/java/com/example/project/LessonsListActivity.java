@@ -95,7 +95,7 @@ public class LessonsListActivity extends AppCompatActivity {
 
         }
 
-        lessonUnlock();
+        // lessonUnlock();
     }
 
     public void lessonUnlock() {

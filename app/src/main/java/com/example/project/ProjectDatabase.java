@@ -29,8 +29,9 @@ public abstract class ProjectDatabase extends RoomDatabase {
                     ProjectDatabase.class, "project_database")
                     .fallbackToDestructiveMigration()
                     .addCallback(roomCallback)
-                    .allowMainThreadQueries()
                     .build();
+
+
         }
         return instance;
     }
@@ -39,7 +40,7 @@ public abstract class ProjectDatabase extends RoomDatabase {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
-            //new AddAllLessonsAsyncTask(instance).execute();
+            new AddAllLessonsAsyncTask(instance).execute();
             //new AddAllQuestionsAsyncTask(instance).execute();
             //new AddAllProblemsAsyncTask(instance).execute();
         }

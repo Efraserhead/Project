@@ -48,6 +48,7 @@ public class TestActivity extends AppCompatActivity {
         answer3 = (RadioButton) findViewById(R.id.radio_answer3);
         Intent intent = getIntent();
         lessonChoice = intent.getIntExtra("lessonChoice",1);
+        lessonPass = intent.getIntExtra("lesson pass",0);
         submit = (Button) findViewById(R.id.submit);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,7 +58,6 @@ public class TestActivity extends AppCompatActivity {
         });
 
         loadTestQuestions();
-        getLessonPass();
         nextQuestion();
 
     }
@@ -162,10 +162,6 @@ public class TestActivity extends AppCompatActivity {
             }
     }
 
-    public void getLessonPass() {
-        thisLesson = ProjectDatabase.getInstance(this).lessonDao().getLesson(lessonChoice);
-        lessonPass = thisLesson.getPass();
-    }
 
 
 

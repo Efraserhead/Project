@@ -4,21 +4,28 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Objects;
 
 
 
-public class LessonActivity extends AppCompatActivity {
+public class LessonActivity extends AppCompatActivity implements CustomDialogFragment.DialogListener {
 
     private int lessonChoice;
     private int lessonSize;
+    private int lessonPass;
     private ArrayList<LessonPage> lessonPages;
     private ViewPager2 viewPager;
+    private LessonPageAdapter lessonPageAdapter;
+    private LessonViewModel lessonViewModel;
 
 
 
@@ -28,70 +35,71 @@ public class LessonActivity extends AppCompatActivity {
         setContentView(R.layout.lesson_layout);
         Intent intent = getIntent();
         lessonChoice = intent.getIntExtra("lessonChoice",1);
-        setUpLesson();
-        setUpViewPager();
-
-    }
-
-
-    public void setUpLesson() {
-        Lesson thisLesson = ProjectDatabase.getInstance(this).lessonDao().getLesson(lessonChoice);
-        lessonPages = thisLesson.getThisLesson();
-    }
-
-
-
-
-    public void setUpViewPager() {
-        LessonPageAdapter lessonPageAdapter = new LessonPageAdapter(lessonPages);
         viewPager = findViewById(R.id.pager);
-        viewPager.setAdapter(lessonPageAdapter);
-        lessonSize = viewPager.getAdapter().getItemCount();
-        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-                if(position==lessonSize-1) {
+        lessonViewModel = new ViewModelProvider(this).get(LessonViewModel.class);
+        new ChooseLessonAsyncTask(this).execute();
 
-                    finish();
-
-                }
-                super.onPageSelected(position);
-            }
-        });
     }
 
+    @Override
+    public void getButtonAction(boolean buttonAction) {
+        if(buttonAction) {
+            Intent intent = new Intent(this, TestActivity.class);
+            intent.putExtra("lessonChoice",lessonChoice);
+            intent.putExtra("lesson pass",lessonPass);
+            startActivity(intent);
+        }
+    }
 
+    private static class ChooseLessonAsyncTask extends AsyncTask<Void,Void,Lesson> {
+        private final WeakReference<LessonActivity> lessonActivityWeakReference;
+
+        public ChooseLessonAsyncTask(LessonActivity activity) {
+            lessonActivityWeakReference = new WeakReference<LessonActivity>(activity);
+        }
+
+        @Override
+        protected Lesson doInBackground(Void... voids) {
+            LessonActivity activity = lessonActivityWeakReference.get();
+            if (activity == null || activity.isFinishing()) {
+                return null;
+            }
+            return activity.lessonViewModel.getLesson(activity.lessonChoice);
+        }
+
+        @Override
+        protected void onPostExecute(Lesson lesson) {
+            super.onPostExecute(lesson);
+            LessonActivity activity = lessonActivityWeakReference.get();
+            if (activity == null || activity.isFinishing()) {
+                return;
+            }
+            activity.lessonPages = lesson.getThisLesson();
+            activity.lessonPass = lesson.getPass();
+            activity.lessonPageAdapter = new LessonPageAdapter(activity.lessonPages);
+            activity.viewPager.setAdapter(activity.lessonPageAdapter);
+            activity.lessonSize = activity.viewPager.getAdapter().getItemCount();
+            activity.viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+                @Override
+                public void onPageSelected(int position) {
+                    if(position==activity.lessonSize-1) {
+
+                        activity.finish();
+
+                    }
+                    super.onPageSelected(position);
+                }
+            });
+        }
+    }
 
 
     public void finish() {
-        new AlertDialog.Builder(LessonActivity.this)
-                    .setTitle("Lesson finished")
-                    .setMessage("click ok to check your understanding")
-                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-
-                    }
-                }).setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.dismiss();
-                            startTest();
-                        }
-                })
-                .create().show();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        CustomDialogFragment customDialogFragment = CustomDialogFragment.newInstance("Lesson finished","press ok to finish lesson");
+        customDialogFragment.show(fragmentManager,"lesson finished");
 
     }
-
-
-    public void startTest() {
-        Intent intent = new Intent(this, TestActivity.class);
-        intent.putExtra("lessonChoice",lessonChoice);
-        startActivity(intent);
-
-    }
-
 
 
 

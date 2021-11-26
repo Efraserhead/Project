@@ -1,20 +1,16 @@
 package com.example.project;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
-import android.content.DialogInterface;
+
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.Objects;
-
 
 
 public class LessonActivity extends AppCompatActivity implements CustomDialogFragment.DialogListener {
@@ -74,7 +70,7 @@ public class LessonActivity extends AppCompatActivity implements CustomDialogFra
             if (activity == null || activity.isFinishing()) {
                 return;
             }
-            activity.lessonPages = lesson.getThisLesson();
+            activity.lessonPages = lesson.getLessonPages();
             activity.lessonPass = lesson.getPass();
             activity.lessonPageAdapter = new LessonPageAdapter(activity.lessonPages);
             activity.viewPager.setAdapter(activity.lessonPageAdapter);
@@ -88,6 +84,7 @@ public class LessonActivity extends AppCompatActivity implements CustomDialogFra
 
                     }
                     super.onPageSelected(position);
+
                 }
             });
         }

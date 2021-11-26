@@ -11,7 +11,7 @@ import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 @TypeConverters({LessonPagesConverter.class, DateConverter.class})
-@Database(entities = {Lesson.class, Problem.class, Question.class}, version = 1)
+@Database(entities = {Lesson.class, Problem.class, Question.class, Category.class}, version = 1)
 public abstract class ProjectDatabase extends RoomDatabase {
 
     private static volatile ProjectDatabase instance;
@@ -22,6 +22,8 @@ public abstract class ProjectDatabase extends RoomDatabase {
     public abstract ProblemDao problemDao();
 
     public abstract QuestionDao questionDao();
+
+    public abstract CategoryDao categoryDao();
 
     public static synchronized ProjectDatabase getInstance(Context context) {
         if (instance == null) {
@@ -40,7 +42,7 @@ public abstract class ProjectDatabase extends RoomDatabase {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
-            new AddAllLessonsAsyncTask(instance).execute();
+            //new AddAllLessonsAsyncTask(instance).execute();
             //new AddAllQuestionsAsyncTask(instance).execute();
             //new AddAllProblemsAsyncTask(instance).execute();
         }
@@ -66,8 +68,8 @@ public abstract class ProjectDatabase extends RoomDatabase {
             lessonDao.insert(new Lesson("looping 2", 3, 0, Lesson.looping2));
             lessonDao.insert(new Lesson("syntax", 3, 0, Lesson.syntax));
             lessonDao.insert(new Lesson("data structures", 4, 0, Lesson.dataStructures));
-            lessonDao.insert(new Lesson("functions 1", 4, 0, Lesson.functions1));
-            lessonDao.insert(new Lesson("functions 2", 4, 0, Lesson.functions2));
+            lessonDao.insert(new Lesson("functions", 4, 0, Lesson.functions1));
+            lessonDao.insert(new Lesson("O0P", 4, 0, Lesson.functions2));
             lessonDao.insert(new Lesson("debugging", 4, 0, Lesson.debugging));
 
            return null;

@@ -1,10 +1,9 @@
 package com.example.project;
 
 import android.app.Application;
+import android.database.Cursor;
 import android.os.AsyncTask;
 
-import androidx.lifecycle.LiveData;
-import androidx.room.Update;
 
 import java.util.List;
 
@@ -13,7 +12,7 @@ public class LessonRepository {
     private LessonDao lessonDao;
 
     Lesson lesson;
-    List<Lesson> categoryLessons;
+    Cursor categoryLessons;
 
 
 
@@ -27,18 +26,19 @@ public class LessonRepository {
 
     public void Insert(Lesson lesson) {
 
-        new InsertLessonAsyncTask(lessonDao).execute(lesson);
+        lessonDao.insert(lesson);
 
     }
 
     public void Update(Lesson lesson) {
 
-        new UpdateLessonAsyncTask(lessonDao).execute(lesson);
+        lessonDao.update(lesson);
     }
 
     public void Delete(Lesson lesson) {
 
-        new DeleteLessonAsyncTask(lessonDao).execute(lesson);
+
+        lessonDao.delete(lesson);
     }
 
     public Lesson getLesson(int lessonChoice) {
@@ -46,9 +46,9 @@ public class LessonRepository {
         return lesson = lessonDao.getLesson(lessonChoice);
     }
 
-    public List<Lesson> getCategoryLessons(int categoryChoice) {
+    public Cursor getCategoryLessons(int categoryChoice) {
 
-        return categoryLessons;
+        return categoryLessons = lessonDao.getCategoryLessons(categoryChoice);
     }
 
     private static class InsertLessonAsyncTask extends AsyncTask<Lesson,Void,Void> {

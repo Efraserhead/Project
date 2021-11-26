@@ -7,7 +7,7 @@ import androidx.room.TypeConverters;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+
 
 @Entity(tableName = "lesson_table")
 public class Lesson {
@@ -20,7 +20,7 @@ public class Lesson {
 
 
     @TypeConverters(LessonPagesConverter.class)
-    private ArrayList<LessonPage> thisLesson;
+    private ArrayList<LessonPage> lessonPages;
 
 
     @Ignore
@@ -33,7 +33,7 @@ public class Lesson {
             new LessonPage(R.string.lesson1_5,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_6,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_7,R.drawable.brain_2),
-            new LessonPage(R.string.lesson1_8,R.drawable.brain_2),
+            new LessonPage(R.string.lesson1_8,null),
             new LessonPage(R.string.lesson1_9,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_10,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_11,R.drawable.brain_2),
@@ -279,18 +279,18 @@ public class Lesson {
     @Ignore
     public Lesson(){}
 
-    public Lesson(String name, int level, int pass, ArrayList<LessonPage> thisLesson) {
+    public Lesson(String name, int level, int pass, ArrayList<LessonPage> lessonPages) {
         this.level = level;
         this.pass = pass;
         this.name = name;
-        this.thisLesson = thisLesson;
+        this.lessonPages = lessonPages;
 
     }
 
-    public ArrayList<LessonPage> getThisLesson() { return thisLesson; }
+    public ArrayList<LessonPage> getLessonPages() { return lessonPages; }
 
-    public void setThisLesson(ArrayList<LessonPage> thisLesson) {
-        this.thisLesson = thisLesson;
+    public void setLessonPages(ArrayList<LessonPage> lessonPages) {
+        this.lessonPages = lessonPages;
     }
 
     public int getId() {

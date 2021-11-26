@@ -69,7 +69,7 @@ public class LessonsListActivity extends AppCompatActivity {
                 break;
             case 2:
                 categoryTitle = findViewById(R.id.categoryTitle);
-                categoryTitle.setText("SECTION ONE: DATA");
+                categoryTitle.setText("PART ONE: DATA");
                 lessonButton1.setText("VARIABLES");
                 lessonButton2.setText("DATA TYPES");
                 lessonButton3.setText("OPERATIONS");
@@ -77,18 +77,18 @@ public class LessonsListActivity extends AppCompatActivity {
                 break;
             case 3:
                 categoryTitle = findViewById(R.id.categoryTitle);
-                categoryTitle.setText("SECTION TWO: CONTROL FLOW");
+                categoryTitle.setText("PART TWO: DATA CONTROL");
                 lessonButton1.setText("CONTROL STRUCTURES");
-                lessonButton2.setText("LOOPING PART 1");
-                lessonButton3.setText("LOOPING PART 2");
-                lessonButton4.setText("SYNTAX");
+                lessonButton2.setText("LOOPING");
+                lessonButton3.setText("DATA STRUCTURES");
+                lessonButton4.setText("LOOPING THROUGH STRUCTURES");
                 break;
             case 4:
                 categoryTitle = findViewById(R.id.categoryTitle);
-                categoryTitle.setText("SECTION THREE: FUNCTIONALITY");
-                lessonButton1.setText("DATA STRUCTURES");
-                lessonButton2.setText("FUNCTIONS PART 1");
-                lessonButton3.setText("FUNCTIONS PART 2");
+                categoryTitle.setText("PART THREE: DATA ORGANIZATION");
+                lessonButton1.setText("FUNCTIONS");
+                lessonButton2.setText("OOP");
+                lessonButton3.setText("SYNTAX");
                 lessonButton4.setText("DEBUGGING");
                 break;
 

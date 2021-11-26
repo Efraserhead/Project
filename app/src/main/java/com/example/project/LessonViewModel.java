@@ -1,6 +1,7 @@
 package com.example.project;
 
 import android.app.Application;
+import android.database.Cursor;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -12,7 +13,7 @@ public class LessonViewModel extends AndroidViewModel {
 
     private LessonRepository lessonRepository;
     private Lesson lesson;
-    private List<Lesson> categoryLessons;
+    private Cursor categoryLessons;
 
 
     public LessonViewModel(@NonNull Application application) {
@@ -41,7 +42,7 @@ public class LessonViewModel extends AndroidViewModel {
 
     }
 
-    public List<Lesson> getCategoryLessons(int categoryChoice) {
+    public Cursor getCategoryLessons(int categoryChoice) {
         categoryLessons = lessonRepository.getCategoryLessons(categoryChoice);
         return  categoryLessons;
     }

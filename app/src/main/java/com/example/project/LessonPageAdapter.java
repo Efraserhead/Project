@@ -12,7 +12,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.List;
+
 
 class LessonPageAdapter extends RecyclerView.Adapter<LessonPageAdapter.ViewHolder>{
 

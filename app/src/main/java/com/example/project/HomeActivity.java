@@ -1,11 +1,14 @@
 package com.example.project;
 
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.view.Menu;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -14,12 +17,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-
+import java.lang.ref.WeakReference;
+import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
-Button dataButton, flowButton, structuresButton, functionsButton, reviewButton;
-TextView username,lessonProgress;
-
+    Button reviewButton;
+    TextView username, lessonProgress;
+    RecyclerView categoryView;
+    List<Category> categories;
+    CategoryViewModel categoryViewModel;
+    CategoryCardAdapter categoryCardAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,44 +35,14 @@ TextView username,lessonProgress;
         username = findViewById(R.id.username);
         lessonProgress = findViewById(R.id.progressText);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        String userNameText = sharedPreferences.getString("username","username");
-        int lessonProgressNo = sharedPreferences.getInt("lessonProgress",0);
-        lessonProgress.setText("Lessons completed: "+lessonProgressNo);
+        String userNameText = sharedPreferences.getString("username", "username");
+        int lessonProgressNo = sharedPreferences.getInt("lessonProgress", 0);
+        lessonProgress.setText("Lessons completed: " + lessonProgressNo);
         username.setText(userNameText);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
-        dataButton = findViewById(R.id.dataSectionButton);
-        dataButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                chooseCategoryOne();
-            }
-        });
-        flowButton = findViewById(R.id.flowbutton);
-        flowButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                chooseCategoryTwo();
-            }
-        });
-        structuresButton = findViewById(R.id.structuresButton);
-        structuresButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                chooseCategoryThree();
-            }
-        });
-        functionsButton = findViewById(R.id.functionsButton);
-        functionsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                chooseCategoryFour();
-            }
-        });
+        categoryView = (RecyclerView) findViewById(R.id.category_recycler);
+        categoryViewModel = new ViewModelProvider(this).get(CategoryViewModel.class);
         reviewButton = findViewById(R.id.problemButton);
         reviewButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,7 +50,13 @@ TextView username,lessonProgress;
                 enterProblems();
             }
         });
+        new LoadCategoriesAsyncTask(this).execute();
+    }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finishAffinity();
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -93,35 +76,44 @@ TextView username,lessonProgress;
                 return true;
             case R.id.exitTab:
                 return true;
-                default:
+            default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    public void chooseCategoryOne() {
-        Intent intent = new Intent(this, AdditionalResourcesActivity.class);
-        intent.putExtra("categoryChoice",1);
-        startActivity(intent);
-    }public void chooseCategoryTwo() {
-        Intent intent = new Intent(this, LessonsListActivity.class);
-        intent.putExtra("categoryChoice",2);
-        startActivity(intent);
-    }
-    public void chooseCategoryThree() {
-        Intent intent = new Intent(this, LessonsListActivity.class);
-        intent.putExtra("categoryChoice",3);
-        startActivity(intent);
-    }
-    public void chooseCategoryFour() {
-        Intent intent = new Intent(this, LessonsListActivity.class);
-        intent.putExtra("categoryChoice",4);
-        startActivity(intent);
-    }
-
     public void enterProblems() {
-        Intent intent = new Intent(this,ProblemActivity.class);
+        Intent intent = new Intent(this, ProblemActivity.class);
         startActivity(intent);
     }
 
+    private static class LoadCategoriesAsyncTask extends AsyncTask<Void, Void, List<Category>> {
+        private final WeakReference<HomeActivity> homeActivityWeakReference;
 
+        public LoadCategoriesAsyncTask(HomeActivity activity) {
+            homeActivityWeakReference = new WeakReference<HomeActivity>(activity);
+        }
+
+        @Override
+        protected List<Category> doInBackground(Void... voids) {
+            HomeActivity activity = homeActivityWeakReference.get();
+            if (activity == null || activity.isFinishing()) {
+                return null;
+            }
+            return activity.categoryViewModel.getCategories();
+        }
+
+        @Override
+        protected void onPostExecute(List<Category> categories) {
+            super.onPostExecute(categories);
+            HomeActivity activity = homeActivityWeakReference.get();
+            if (activity == null || activity.isFinishing()) {
+                return;
+            }
+            activity.categories = categories;
+            activity.categoryCardAdapter = new CategoryCardAdapter(categories);
+            activity.categoryView.setAdapter(activity.categoryCardAdapter);
+            activity.categoryView.setLayoutManager(new LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false));
+
+        }
+    }
 }

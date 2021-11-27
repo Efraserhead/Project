@@ -23,16 +23,16 @@ public class LessonViewModel extends AndroidViewModel {
 
     }
 
-    public void Insert(Lesson lesson) {
+    public void insert(Lesson lesson) {
 
         lessonRepository.Insert(lesson);
     }
 
-    public void Update(Lesson lesson) {
+    public void update(Lesson lesson) {
        lessonRepository.Update(lesson);
     }
 
-    public void Delete(Lesson lesson) {
+    public void delete(Lesson lesson) {
         lessonRepository.Delete(lesson);
     }
 

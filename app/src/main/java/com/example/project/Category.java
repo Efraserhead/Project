@@ -11,15 +11,13 @@ public class Category {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
-    private int lockImageId;
 
     private String name, lesson1, lesson2, lesson3, lesson4;
 
 
     private int lock;
 
-    public Category(int lockImageId, String name, String lesson1, String lesson2, String lesson3, String lesson4, int lock) {
-        this.lockImageId = lockImageId;
+    public Category(String name, String lesson1, String lesson2, String lesson3, String lesson4, int lock) {
         this.name = name;
         this.lesson1 = lesson1;
         this.lesson2 = lesson2;
@@ -34,14 +32,6 @@ public class Category {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getLockImageId() {
-        return lockImageId;
-    }
-
-    public void setLockImageId(int lockImageId) {
-        this.lockImageId = lockImageId;
     }
 
     public String getName() {

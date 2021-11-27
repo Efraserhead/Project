@@ -1,6 +1,7 @@
 package com.example.project;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
@@ -8,6 +9,8 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -32,10 +35,35 @@ public class LessonActivity extends AppCompatActivity implements CustomDialogFra
         Intent intent = getIntent();
         lessonChoice = intent.getIntExtra("lessonChoice",1);
         viewPager = findViewById(R.id.pager);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolBar);
+        setSupportActionBar(toolbar);
         lessonViewModel = new ViewModelProvider(this).get(LessonViewModel.class);
         new ChooseLessonAsyncTask(this).execute();
 
     }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the app bar.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.home:
+                return true;
+            case R.id.settingsTab:
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.exitTab:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
 
     @Override
     public void getButtonAction(boolean buttonAction) {
@@ -80,7 +108,7 @@ public class LessonActivity extends AppCompatActivity implements CustomDialogFra
                 public void onPageSelected(int position) {
                     if(position==activity.lessonSize-1) {
 
-                        activity.finish();
+                        activity.finishLesson();
 
                     }
                     super.onPageSelected(position);
@@ -91,7 +119,7 @@ public class LessonActivity extends AppCompatActivity implements CustomDialogFra
     }
 
 
-    public void finish() {
+    public void finishLesson() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         CustomDialogFragment customDialogFragment = CustomDialogFragment.newInstance("Lesson finished","press ok to finish lesson");
         customDialogFragment.show(fragmentManager,"lesson finished");

@@ -1,6 +1,5 @@
 package com.example.project;
 
-import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -23,7 +22,7 @@ public interface QuestionDao {
     void update(Question question);
 
 
-    @Query("SELECT * FROM question_table WHERE lessonNumber=:lessonNumber")
+    @Query("SELECT * FROM question_table WHERE lessonId=:lessonNumber")
     List<Question> getLessonQuestions(int lessonNumber);
 
 

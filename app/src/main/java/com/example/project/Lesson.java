@@ -14,7 +14,7 @@ public class Lesson {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
-    private int level;
+    private int categoryId;
     private int pass;
     private String name;
 
@@ -33,7 +33,7 @@ public class Lesson {
             new LessonPage(R.string.lesson1_5,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_6,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_7,R.drawable.brain_2),
-            new LessonPage(R.string.lesson1_8,null),
+            new LessonPage(R.string.lesson1_8,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_9,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_10,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_11,R.drawable.brain_2),
@@ -142,7 +142,7 @@ public class Lesson {
             new LessonPage(R.string.lesson1_16,R.drawable.brain_2)));
 
     @Ignore
-    public static final ArrayList<LessonPage> looping1 = new ArrayList<>(Arrays.asList(
+    public static final ArrayList<LessonPage> looping = new ArrayList<>(Arrays.asList(
             new LessonPage(R.string.lesson1_1,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_2, R.drawable.brain_2),
             new LessonPage(R.string.lesson1_3,R.drawable.brain_2),
@@ -161,7 +161,7 @@ public class Lesson {
             new LessonPage(R.string.lesson1_16,R.drawable.brain_2)));
 
     @Ignore
-    public static final ArrayList<LessonPage> looping2 = new ArrayList<>(Arrays.asList(
+    public static final ArrayList<LessonPage> functions = new ArrayList<>(Arrays.asList(
             new LessonPage(R.string.lesson1_1,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_2, R.drawable.brain_2),
             new LessonPage(R.string.lesson1_3,R.drawable.brain_2),
@@ -180,7 +180,27 @@ public class Lesson {
             new LessonPage(R.string.lesson1_16,R.drawable.brain_2)));
 
     @Ignore
-    public static final ArrayList<LessonPage> syntax = new ArrayList<>(Arrays.asList(
+    public static final ArrayList<LessonPage> OOP = new ArrayList<>(Arrays.asList(
+            new LessonPage(R.string.lesson1_1,R.drawable.brain_2),
+            new LessonPage(R.string.lesson1_2, R.drawable.brain_2),
+            new LessonPage(R.string.lesson1_3,R.drawable.brain_2),
+            new LessonPage(R.string.lesson1_4,R.drawable.brain_2),
+            new LessonPage(R.string.lesson1_5,R.drawable.brain_2),
+            new LessonPage(R.string.lesson1_6,R.drawable.brain_2),
+            new LessonPage(R.string.lesson1_7,R.drawable.brain_2),
+            new LessonPage(R.string.lesson1_8,R.drawable.brain_2),
+            new LessonPage(R.string.lesson1_9,R.drawable.brain_2),
+            new LessonPage(R.string.lesson1_10,R.drawable.brain_2),
+            new LessonPage(R.string.lesson1_11,R.drawable.brain_2),
+            new LessonPage(R.string.lesson1_12,R.drawable.brain_2),
+            new LessonPage(R.string.lesson1_13,R.drawable.brain_2),
+            new LessonPage(R.string.lesson1_14,R.drawable.brain_2),
+            new LessonPage(R.string.lesson1_15,R.drawable.brain_2),
+            new LessonPage(R.string.lesson1_16,R.drawable.brain_2)));
+
+
+    @Ignore
+    public static final ArrayList<LessonPage> OOP2 = new ArrayList<>(Arrays.asList(
             new LessonPage(R.string.lesson1_1,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_2, R.drawable.brain_2),
             new LessonPage(R.string.lesson1_3,R.drawable.brain_2),
@@ -219,7 +239,7 @@ public class Lesson {
             new LessonPage(R.string.lesson1_16,R.drawable.brain_2)));
 
     @Ignore
-    public static final ArrayList<LessonPage> functions1 = new ArrayList<>(Arrays.asList(
+    public static final ArrayList<LessonPage> dataStructuresLoop = new ArrayList<>(Arrays.asList(
             new LessonPage(R.string.lesson1_1,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_2, R.drawable.brain_2),
             new LessonPage(R.string.lesson1_3,R.drawable.brain_2),
@@ -238,7 +258,7 @@ public class Lesson {
             new LessonPage(R.string.lesson1_16,R.drawable.brain_2)));
 
     @Ignore
-    public static final ArrayList<LessonPage> functions2 = new ArrayList<>(Arrays.asList(
+    public static final ArrayList<LessonPage> syntax = new ArrayList<>(Arrays.asList(
             new LessonPage(R.string.lesson1_1,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_2, R.drawable.brain_2),
             new LessonPage(R.string.lesson1_3,R.drawable.brain_2),
@@ -279,8 +299,8 @@ public class Lesson {
     @Ignore
     public Lesson(){}
 
-    public Lesson(String name, int level, int pass, ArrayList<LessonPage> lessonPages) {
-        this.level = level;
+    public Lesson(String name, int categoryId, int pass, ArrayList<LessonPage> lessonPages) {
+        this.categoryId = categoryId;
         this.pass = pass;
         this.name = name;
         this.lessonPages = lessonPages;
@@ -301,12 +321,12 @@ public class Lesson {
         this.id = id;
     }
 
-    public int getLevel() {
-        return level;
+    public int getCategoryId() {
+        return categoryId;
     }
 
-    public void setLevel(int level) {
-        this.level = level;
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
     }
 
     public int getPass() {

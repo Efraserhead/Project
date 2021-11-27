@@ -4,24 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="20dp"
-    android:paddingTop="20dp"
-    android:paddingRight="20dp"
-    android:paddingBottom="20dp"
     tools:context=".TestActivity">
 
+    <include
+        android:id="@+id/toolBar"
+        layout="@layout/toolbar"
+        tools:layout_editor_absoluteX="-16dp"
+        tools:layout_editor_absoluteY="674dp" />
 
 
     <TextView
         android:id="@+id/questionText"
         android:layout_width="333dp"
         android:layout_height="300dp"
-        android:layout_marginTop="50dp"
         android:padding="20dp"
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/toolBar" />
 
     <Button
         android:id="@+id/submit"

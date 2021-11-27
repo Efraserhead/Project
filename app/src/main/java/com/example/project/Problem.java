@@ -1,6 +1,8 @@
 package com.example.project;
 
 
+import android.graphics.drawable.Drawable;
+
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
@@ -11,37 +13,36 @@ import java.util.Date;
 public class Problem {
 
 
-    private String problem, answer, problemCode;
+    private int problemCode;
+
+    private String answer, problemQuestion;
+
+
 
     @TypeConverters(DateConverter.class)
     private Date nextAvailable;
 
 
-    private int lessonNo, level;
+    private int lessonId, level;
 
     @PrimaryKey(autoGenerate = true)
     private int id;
 
-
-    public Problem(String problem, String problemCode, String answer,
-                   int level, Date nextAvailable) {
-
-        this.problem = problem;
+    public Problem(int problemCode, String answer, String problemQuestion, Date nextAvailable, int lessonId, int level) {
         this.problemCode = problemCode;
         this.answer = answer;
-        this.level = level;
+        this.problemQuestion = problemQuestion;
         this.nextAvailable = nextAvailable;
-
-
-
+        this.lessonId = lessonId;
+        this.level = level;
     }
 
-    public String getProblem() {
-        return problem;
+    public int getProblemCode() {
+        return problemCode;
     }
 
-    public void setProblem(String problem) {
-        this.problem = problem;
+    public void setProblemCode(int problemCode) {
+        this.problemCode = problemCode;
     }
 
     public String getAnswer() {
@@ -52,20 +53,28 @@ public class Problem {
         this.answer = answer;
     }
 
-    public String getProblemCode() {
-        return problemCode;
+    public String getProblemQuestion() {
+        return problemQuestion;
     }
 
-    public void setProblemCode(String problemCode) {
-        this.problemCode = problemCode;
+    public void setProblemQuestion(String problemQuestion) {
+        this.problemQuestion = problemQuestion;
     }
 
-    public int getLessonNo() {
-        return lessonNo;
+    public Date getNextAvailable() {
+        return nextAvailable;
     }
 
-    public void setLessonNo(int lessonNo) {
-        this.lessonNo = lessonNo;
+    public void setNextAvailable(Date nextAvailable) {
+        this.nextAvailable = nextAvailable;
+    }
+
+    public int getLessonId() {
+        return lessonId;
+    }
+
+    public void setLessonId(int lessonId) {
+        this.lessonId = lessonId;
     }
 
     public int getLevel() {
@@ -82,13 +91,5 @@ public class Problem {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public Date getNextAvailable() {
-        return nextAvailable;
-    }
-
-    public void setNextAvailable(Date nextAvailable) {
-        this.nextAvailable = nextAvailable;
     }
 }

@@ -15,16 +15,16 @@ public class Question {
     private String answerId1;
     private String answerId2;
     private int correctAnswerId;
-    private int lessonNumber;
+    private int lessonId;
 
 
-    public Question(String question, String answerId0, String answerId1, String answerId2, int correctAnswerId, int lessonNumber) {
+    public Question(String question, String answerId0, String answerId1, String answerId2, int correctAnswerId, int lessonId) {
         this.question = question;
         this.answerId0 = answerId0;
         this.answerId1 = answerId1;
         this.answerId2 = answerId2;
         this.correctAnswerId = correctAnswerId;
-        this.lessonNumber = lessonNumber;
+        this.lessonId = lessonId;
 
     }
 
@@ -76,11 +76,11 @@ public class Question {
         this.correctAnswerId = correctAnswerId;
     }
 
-    public int getLessonNumber() {
-        return lessonNumber;
+    public int getLessonId() {
+        return lessonId;
     }
 
-    public void setLessonNumber(int lessonNumber) {
-        this.lessonNumber = lessonNumber;
+    public void setLessonId(int lessonId) {
+        this.lessonId = lessonId;
     }
 }

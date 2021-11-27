@@ -12,54 +12,15 @@
         tools:layout_editor_absoluteX="-16dp"
         tools:layout_editor_absoluteY="674dp" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="414dp"
-        android:layout_height="280dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <Button
-            android:id="@+id/dataSectionButton"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="GETTING STARTED " />
-
-        <Button
-            android:id="@+id/flowbutton"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="SECTION ONE:DATA" />
-
-        <Button
-            android:id="@+id/structuresButton"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="SECTION TWO:CONTROL FLOW" />
-
-        <Button
-            android:id="@+id/functionsButton"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="SECTION THREE:FUNCTIONS" />
-
-    </LinearLayout>
-
     <Button
         android:id="@+id/problemButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="35dp"
-        android:layout_marginBottom="62dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="104dp"
         android:text="PROBLEMS"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progressText" />
 
     <TextView
         android:id="@+id/username"
@@ -81,5 +42,20 @@
         android:text="progress: "
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/username" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/category_recycler"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="42dp"
+        android:layout_marginEnd="42dp"
+        android:layout_marginBottom="42dp"
+        android:paddingBottom="10dp"
+        android:clipToPadding="false"
+        android:scrollbars="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

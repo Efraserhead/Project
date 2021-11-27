@@ -10,4 +10,6 @@
     <color name="PINK">#D896CD</color>
     <color name="ARCTIC">#99daec</color>
     <color name="pastel_yellow">#FDFD96</color>
+    <color name="grey">#808080</color>
+    <color name="green">#AFE1AF</color>
 </resources>

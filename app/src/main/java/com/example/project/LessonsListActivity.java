@@ -1,35 +1,50 @@
 package com.example.project;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.database.Cursor;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.lang.ref.WeakReference;
+
 
 public class LessonsListActivity extends AppCompatActivity {
-    int categoryChoice;
+    int categoryChoice, lessonId1, lessonId2, lessonId3, lessonId4;
+    String title;
     TextView categoryTitle;
-    Button lessonButton1,lessonButton2,lessonButton3,lessonButton4;
-
+    LessonViewModel lessonViewModel;
+    Button lessonButton1, lessonButton2, lessonButton3, lessonButton4, resources1, resources2, resources3, resources4;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolBar);
+        setSupportActionBar(toolbar);
         Intent intent = getIntent();
         categoryChoice = intent.getIntExtra("categoryChoice", 0);
+        title = intent.getStringExtra("title");
         setContentView(R.layout.list_lessons);
         categoryTitle = findViewById(R.id.categoryTitle);
+        categoryTitle.setText(title);
         lessonButton1 = (Button) findViewById(R.id.lessonButton1);
+        lessonViewModel = new ViewModelProvider(this).get(LessonViewModel.class);
+
         lessonButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                lessonChoiceOne();
+
+                startLesson(lessonId1);
             }
         });
         lessonButton2 = (Button) findViewById(R.id.lessonButton2);
@@ -37,7 +52,7 @@ public class LessonsListActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                lessonChoiceTwo();
+                startLesson(lessonId2);
             }
         });
         lessonButton3 = (Button) findViewById(R.id.lessonButton3);
@@ -45,7 +60,7 @@ public class LessonsListActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                lessonChoiceThree();
+                startLesson(lessonId3);
             }
         });
         lessonButton4 = (Button) findViewById(R.id.lessonButton4);
@@ -53,112 +68,150 @@ public class LessonsListActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                lessonChoiceFour();
+                startLesson(lessonId4);
             }
         });
-        switch (categoryChoice) {
-            case 0:
-                break;
-            case 1:
-                categoryTitle = findViewById(R.id.categoryTitle);
-                categoryTitle.setText("GETTING STARTED");
-                lessonButton1.setText("INTRODUCTION");
-                lessonButton2.setVisibility(View.INVISIBLE);
-                lessonButton3.setVisibility(View.INVISIBLE);
-                lessonButton4.setVisibility(View.INVISIBLE);
-                break;
-            case 2:
-                categoryTitle = findViewById(R.id.categoryTitle);
-                categoryTitle.setText("PART ONE: DATA");
-                lessonButton1.setText("VARIABLES");
-                lessonButton2.setText("DATA TYPES");
-                lessonButton3.setText("OPERATIONS");
-                lessonButton4.setText("STRINGS");
-                break;
-            case 3:
-                categoryTitle = findViewById(R.id.categoryTitle);
-                categoryTitle.setText("PART TWO: DATA CONTROL");
-                lessonButton1.setText("CONTROL STRUCTURES");
-                lessonButton2.setText("LOOPING");
-                lessonButton3.setText("DATA STRUCTURES");
-                lessonButton4.setText("LOOPING THROUGH STRUCTURES");
-                break;
-            case 4:
-                categoryTitle = findViewById(R.id.categoryTitle);
-                categoryTitle.setText("PART THREE: DATA ORGANIZATION");
-                lessonButton1.setText("FUNCTIONS");
-                lessonButton2.setText("OOP");
-                lessonButton3.setText("SYNTAX");
-                lessonButton4.setText("DEBUGGING");
-                break;
+        resources1 = (Button) findViewById(R.id.resources1);
+        resources1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startResourcesPage(lessonId1);
+            }
+        });
+        resources2 = (Button) findViewById(R.id.resources2);
+        resources2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startResourcesPage(lessonId2);
+            }
+        });
+        resources3 = (Button) findViewById(R.id.resources3);
+        resources3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startResourcesPage(lessonId3);
+            }
+        });
+        resources4 = (Button) findViewById(R.id.resources4);
+        resources4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startResourcesPage(lessonId4);
+            }
+        });
 
 
-        }
-
-        // lessonUnlock();
+        new LoadLessonsListAsyncTask(this).execute();
     }
 
-    public void lessonUnlock() {
 
-            Cursor cursor = ProjectDatabase.getInstance(this).lessonDao().getCategoryLessons(categoryChoice);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the app bar.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.home:
+                return true;
+            case R.id.settingsTab:
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.exitTab:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
+    private static class LoadLessonsListAsyncTask extends AsyncTask<Void, Void, Cursor> {
+        private final WeakReference<LessonsListActivity> lessonsListActivityWeakReference;
+
+        public LoadLessonsListAsyncTask(LessonsListActivity activity) {
+            lessonsListActivityWeakReference = new WeakReference<LessonsListActivity>(activity);
+        }
+
+        @Override
+        protected Cursor doInBackground(Void... voids) {
+            LessonsListActivity activity = lessonsListActivityWeakReference.get();
+            if (activity == null || activity.isFinishing()) {
+                return null;
+            }
+            return activity.lessonViewModel.getCategoryLessons(activity.categoryChoice);
+        }
+
+        @Override
+        protected void onPostExecute(Cursor cursor) {
+            LessonsListActivity activity = lessonsListActivityWeakReference.get();
+            if (activity == null || activity.isFinishing()) {
+                return;
+            }
+            super.onPostExecute(cursor);
             if (cursor.moveToFirst()) {
-                boolean passCheck = (cursor.getInt(3)==1);
-                lessonButton2.setEnabled(passCheck);
+                boolean passCheck = (cursor.getInt(2) == 1);
+                if (passCheck) {
+                    activity.lessonButton1.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.done, 0);
+                }
+                activity.lessonId1 = cursor.getInt(0);
+                activity.lessonButton1.setText(cursor.getString(3));
+                activity.lessonButton1.setVisibility(View.VISIBLE);
+                activity.resources1.setVisibility(View.VISIBLE);
+                activity.resources2.setEnabled(passCheck);
+                activity.lessonButton2.setEnabled(passCheck);
                 if (cursor.moveToNext()) {
-                    passCheck = (cursor.getInt(3)==1);
-                    lessonButton3.setEnabled(passCheck);
-                    if(cursor.moveToNext()) {
-                        passCheck = (cursor.getInt(3)==1);
-                        lessonButton4.setEnabled(passCheck);
+                    passCheck = (cursor.getInt(2) == 1);
+                    if (passCheck) {
+                        activity.lessonButton2.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.done, 0);
+                    }
+                    activity.lessonId2 = cursor.getInt(0);
+                    activity.lessonButton2.setText(cursor.getString(3));
+                    activity.lessonButton2.setVisibility(View.VISIBLE);
+                    activity.resources2.setVisibility(View.VISIBLE);
+                    activity.resources3.setEnabled(passCheck);
+                    activity.lessonButton3.setEnabled(passCheck);
+                    if (cursor.moveToNext()) {
+                        passCheck = (cursor.getInt(2) == 1);
+                        if (passCheck) {
+                            activity.lessonButton3.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.done, 0);
+                        }
+                        activity.lessonId3 = cursor.getInt(0);
+                        activity.lessonButton3.setText(cursor.getString(3));
+                        activity.lessonButton3.setVisibility(View.VISIBLE);
+                        activity.resources3.setVisibility(View.VISIBLE);
+                        activity.resources4.setEnabled(passCheck);
+                        activity.lessonButton4.setEnabled(passCheck);
+                    }
+                    if (cursor.moveToNext()) {
+                        passCheck = (cursor.getInt(2) == 1);
+                        if (passCheck) {
+                            activity.lessonButton4.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.done, 0);
+                        }
+                        activity.lessonId4 = cursor.getInt(0);
+                        activity.lessonButton4.setText(cursor.getString(3));
+                        activity.lessonButton4.setVisibility(View.VISIBLE);
+                        activity.resources4.setVisibility(View.VISIBLE);
                     }
                 }
             }
             cursor.close();
-    }
-
-    public void lessonChoiceOne() {
-        Intent intent = new Intent(this, LessonActivity.class);
-        switch(categoryChoice){
-            case 0: break;
-            case 1: intent.putExtra("lessonChoice",1); startActivity(intent);break;
-            case 2:intent.putExtra("lessonChoice",2); startActivity(intent);break;
-            case 3:intent.putExtra("lessonChoice",6); startActivity(intent);break;
-            case 4:intent.putExtra("lessonChoice",10); startActivity(intent);break;
         }
-
     }
-    public void lessonChoiceTwo() {
+
+    public void startLesson(int lessonChoice) {
         Intent intent = new Intent(this, LessonActivity.class);
-        switch(categoryChoice){
-            case 0: break;
-            case 1: intent.putExtra("lessonChoice",1); startActivity(intent);break;
-            case 2:intent.putExtra("lessonChoice",3); startActivity(intent);break;
-            case 3:intent.putExtra("lessonChoice",7); startActivity(intent);break;
-            case 4:intent.putExtra("lessonChoice",11); startActivity(intent);break;
-        }
-
+        intent.putExtra("lessonChoice", lessonChoice);
+        startActivity(intent);
     }
-    public void lessonChoiceThree() {
-        Intent intent = new Intent(this, LessonActivity.class);
-        switch(categoryChoice){
-            case 0: break;
-            case 1: intent.putExtra("lessonChoice",1); startActivity(intent);break;
-            case 2:intent.putExtra("lessonChoice",4); startActivity(intent);break;
-            case 3:intent.putExtra("lessonChoice",8); startActivity(intent);break;
-            case 4:intent.putExtra("lessonChoice",12); startActivity(intent);break;
-        }
 
+    public void startResourcesPage(int resourceChoice) {
+        Intent intent = new Intent(this,AdditionalResourcesActivity.class);
+        intent.putExtra("resourcesChoice",resourceChoice);
+        startActivity(intent);
     }
-    public void lessonChoiceFour() {
-        Intent intent = new Intent(this, LessonActivity.class);
-        switch(categoryChoice){
-            case 0: break;
-            case 1: intent.putExtra("lessonChoice",1); startActivity(intent);break;
-            case 2:intent.putExtra("lessonChoice",5); startActivity(intent);break;
-            case 3:intent.putExtra("lessonChoice",9); startActivity(intent);break;
-            case 4:intent.putExtra("lessonChoice",13); startActivity(intent);break;
-        }
 
-    }
 
 }

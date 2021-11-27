@@ -51,47 +51,7 @@ public class LessonRepository {
         return categoryLessons = lessonDao.getCategoryLessons(categoryChoice);
     }
 
-    private static class InsertLessonAsyncTask extends AsyncTask<Lesson,Void,Void> {
-        private LessonDao lessonDao;
 
-        private InsertLessonAsyncTask(LessonDao lessonDao) {
-            this.lessonDao = lessonDao;
-        }
-
-        @Override
-        protected Void doInBackground(Lesson... lessons) {
-            lessonDao.insert(lessons[0]);
-            return null;
-        }
-    }
-
-    private static class UpdateLessonAsyncTask extends AsyncTask<Lesson,Void,Void> {
-        private LessonDao lessonDao;
-
-        private UpdateLessonAsyncTask(LessonDao lessonDao) {
-            this.lessonDao = lessonDao;
-        }
-
-        @Override
-        protected Void doInBackground(Lesson... lessons) {
-            lessonDao.update(lessons[0]);
-            return null;
-        }
-    }
-
-    private static class DeleteLessonAsyncTask extends AsyncTask<Lesson,Void,Void> {
-        private LessonDao lessonDao;
-
-        private DeleteLessonAsyncTask(LessonDao lessonDao) {
-            this.lessonDao = lessonDao;
-        }
-
-        @Override
-        protected Void doInBackground(Lesson... lessons) {
-            lessonDao.delete(lessons[0]);
-            return null;
-        }
-    }
 
 
 

@@ -1,6 +1,9 @@
 package com.example.project;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -9,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -48,10 +50,23 @@ class CategoryCardAdapter extends RecyclerView.Adapter<CategoryCardAdapter.ViewH
         ImageView lock = (ImageView) cardView.findViewById(R.id.lockSymbol);
         if(categories.get(position).getLock()==0) {
             lock.setImageResource(R.drawable.ic_baseline_lock_24);
+
         }
         else {
             lock.setImageResource(R.drawable.ic_baseline_lock_open_24);
         }
+        cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(categories.get(position).getLock()==0) {
+                    return;
+                }
+                Intent intent = new Intent(cardView.getContext(), LessonsListActivity.class);
+                intent.putExtra("categoryChoice",categories.get(position).getId());
+                intent.putExtra("title",categories.get(position).getName());
+                cardView.getContext().startActivity(intent);
+            }
+        });
 
     }
 

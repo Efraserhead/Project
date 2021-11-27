@@ -4,14 +4,18 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import java.lang.ref.WeakReference;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -21,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     EditText makeUserName;
     Boolean signedUp;
     LessonViewModel lessonViewModel;
+    CategoryViewModel categoryViewModel;
 
 
     @Override
@@ -28,16 +33,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         lessonViewModel = new ViewModelProvider(this).get(LessonViewModel.class);
+        categoryViewModel = new ViewModelProvider(this).get(CategoryViewModel.class);
         signUpButton = (Button) findViewById(R.id.signUpButton);
         makeUserName = (EditText) findViewById(R.id.makeUsername);
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {signUpButton(); }
+            public void onClick(View view) {
+                signUpButton();
+            }
         });
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        signedUp = sharedPreferences.getBoolean("signedUp",false);
-        if(signedUp) {
+        signedUp = sharedPreferences.getBoolean("signedUp", false);
+        if (signedUp) {
             Intent intent = new Intent(this, HomeActivity.class);
             startActivity(intent);
 
@@ -63,57 +71,61 @@ public class MainActivity extends AppCompatActivity {
 
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
             sharedPreferences.edit().putBoolean("signedUp", true).apply();
-            sharedPreferences.edit().putString("username",userName).apply();
-            lessonViewModel.Insert(new Lesson("getting started", 1, 0, Lesson.introduction));
-            lessonViewModel.Insert(new Lesson("variables", 2, 0,Lesson.variables));
-            lessonViewModel.Insert(new Lesson("data types", 2, 0,Lesson.dataTypes));
-            lessonViewModel.Insert(new Lesson("operators", 2, 0, Lesson.operators));
-            lessonViewModel.Insert(new Lesson("strings", 2, 0, Lesson.stringsPages));
-            lessonViewModel.Insert(new Lesson("control structures", 3, 0, Lesson.controlStructures));
-            lessonViewModel.Insert(new Lesson("looping 1", 3, 0, Lesson.looping1));
-            lessonViewModel.Insert(new Lesson("looping 2", 3, 0, Lesson.looping2));
-            lessonViewModel.Insert(new Lesson("syntax", 3, 0, Lesson.syntax));
-            lessonViewModel.Insert(new Lesson("data structures", 4, 0, Lesson.dataStructures));
-            lessonViewModel.Insert(new Lesson("functions 1", 4, 0, Lesson.functions1));
-            lessonViewModel.Insert(new Lesson("functions 2", 4, 0, Lesson.functions2));
-            lessonViewModel.Insert(new Lesson("debugging", 4, 0, Lesson.debugging));
-            Intent intent = new Intent(this, HomeActivity.class);
-            intent.putExtra("lessonChoice",1);
-            startActivity(intent);
+            sharedPreferences.edit().putString("username", userName).apply();
+            new PrepopulateDataBaseAsyncTask(this).execute();
         }
 
 
     }
 
-/*
-    public void makeLesson() {
-ProjectDatabase.getInstance(this).lessonDao().insert(new Lesson());
-        ProjectDatabase.getInstance(this).lessonDao().insert(new Lesson());
-        ProjectDatabase.getInstance(this).lessonDao().insert(new Lesson());
-        ProjectDatabase.getInstance(this).lessonDao().insert(new Lesson());
-        ProjectDatabase.getInstance(this).lessonDao().insert(new Lesson());
-        ProjectDatabase.getInstance(this).lessonDao().insert(new Lesson());
-        ProjectDatabase.getInstance(this).lessonDao().insert(new Lesson());
-        ProjectDatabase.getInstance(this).lessonDao().insert(new Lesson());
-        ProjectDatabase.getInstance(this).lessonDao().insert(new Lesson());
-        ProjectDatabase.getInstance(this).lessonDao().insert(new Lesson());
+    public static class PrepopulateDataBaseAsyncTask extends AsyncTask<Void, Void, Void> {
+        private final WeakReference<MainActivity> mainActivityWeakReference;
+
+        public PrepopulateDataBaseAsyncTask(MainActivity activity) {
+            mainActivityWeakReference = new WeakReference<MainActivity>(activity);
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            MainActivity activity = mainActivityWeakReference.get();
+            if (activity == null || activity.isFinishing()) {
+                return null;
+            }
+            activity.categoryViewModel.insert(new Category("INTRODUCTION", "getting started", "", "", "", 1));
+            activity.categoryViewModel.insert(new Category("PART I", "Variables", "Data types", "Operators", "Strings", 0));
+            activity.categoryViewModel.insert(new Category("PART II", "Control structures", "Looping", "functions", "", 0));
+            activity.categoryViewModel.insert(new Category("PART III", "OOP", "Data Structures", "Looping through structures", "", 0));
+            activity.categoryViewModel.insert(new Category("PART IV", "Syntax", "Debugging", "", "", 0));
+            activity.lessonViewModel.insert(new Lesson("getting started", 1, 0, Lesson.introduction));
+            activity.lessonViewModel.insert(new Lesson("variables", 2, 0, Lesson.variables));
+            activity.lessonViewModel.insert(new Lesson("data types", 2, 0, Lesson.dataTypes));
+            activity.lessonViewModel.insert(new Lesson("operators", 2, 0, Lesson.operators));
+            activity.lessonViewModel.insert(new Lesson("strings", 2, 0, Lesson.stringsPages));
+            activity.lessonViewModel.insert(new Lesson("control structures", 3, 0, Lesson.controlStructures));
+            activity.lessonViewModel.insert(new Lesson("looping ", 3, 0, Lesson.looping));
+            activity.lessonViewModel.insert(new Lesson("functions", 3, 0, Lesson.functions));
+            activity.lessonViewModel.insert(new Lesson("OOP", 4, 0, Lesson.OOP));
+            activity.lessonViewModel.insert(new Lesson("OOP II", 4, 0, Lesson.OOP2));
+            activity.lessonViewModel.insert(new Lesson("Data structures", 4, 0, Lesson.dataStructures));
+            activity.lessonViewModel.insert(new Lesson("data structures II", 4, 0, Lesson.dataStructuresLoop));
+            activity.lessonViewModel.insert(new Lesson("syntax", 5, 0, Lesson.syntax));
+            activity.lessonViewModel.insert(new Lesson("debugging", 5, 0, Lesson.debugging));
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void unused) {
+            super.onPostExecute(unused);
+            MainActivity activity = mainActivityWeakReference.get();
+            if (activity == null || activity.isFinishing()) {
+                return;
+            }
+            Intent intent = new Intent(activity, LessonActivity.class);
+            intent.putExtra("lessonChoice", 1);
+            activity.startActivity(intent);
+        }
     }
-
-        new Lesson("getting started", 1, 0, Lesson.introduction);
-        new Lesson("variables", 2, 0,Lesson.variables);
-        new Lesson("data types", 2, 0,Lesson.dataTypes);
-        new Lesson( "operators", 2, 0);
-        new Lesson("strings", 2, 0);
-        insertLesson("control structures", 3, 0);
-        insertLesson("looping 1", 3, 0);
-        insertLesson("looping 2", 3, 0);
-        insertLesson("syntax", 3, 0);
-        insertLesson("data structures", 4, 0);
-        insertLesson("functions 1", 4, 0);
-        insertLesson("functions 2", 4, 0);
-        insertLesson("debugging", 4, 0);
-
-    } **/
 }
 
 

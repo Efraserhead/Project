@@ -1,13 +1,10 @@
 package com.example.project;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import androidx.preference.PreferenceFragmentCompat;
-import androidx.preference.PreferenceManager;
+
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -21,12 +18,7 @@ public class SettingsActivity extends AppCompatActivity {
                     .replace(R.id.settings, new SettingsFragment())
                     .commit();
         }
-
-
     }
-
-
-
 
     public static class SettingsFragment extends PreferenceFragmentCompat {
         @Override

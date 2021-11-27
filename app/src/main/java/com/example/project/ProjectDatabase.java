@@ -43,6 +43,7 @@ public abstract class ProjectDatabase extends RoomDatabase {
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
             //new AddAllLessonsAsyncTask(instance).execute();
+            //new AddAllCategoriesAsyncTask(instance).execute();
             //new AddAllQuestionsAsyncTask(instance).execute();
             //new AddAllProblemsAsyncTask(instance).execute();
         }
@@ -64,12 +65,12 @@ public abstract class ProjectDatabase extends RoomDatabase {
             lessonDao.insert(new Lesson("operators", 2, 0, Lesson.operators));
             lessonDao.insert(new Lesson("strings", 2, 0, Lesson.stringsPages));
             lessonDao.insert(new Lesson("control structures", 3, 0, Lesson.controlStructures));
-            lessonDao.insert(new Lesson("looping 1", 3, 0, Lesson.looping1));
-            lessonDao.insert(new Lesson("looping 2", 3, 0, Lesson.looping2));
-            lessonDao.insert(new Lesson("syntax", 3, 0, Lesson.syntax));
+            lessonDao.insert(new Lesson("looping 1", 3, 0, Lesson.looping));
+            lessonDao.insert(new Lesson("functions", 3, 0, Lesson.functions));
+            lessonDao.insert(new Lesson("OOP", 4, 0, Lesson.OOP));
             lessonDao.insert(new Lesson("data structures", 4, 0, Lesson.dataStructures));
-            lessonDao.insert(new Lesson("functions", 4, 0, Lesson.functions1));
-            lessonDao.insert(new Lesson("O0P", 4, 0, Lesson.functions2));
+            lessonDao.insert(new Lesson("Looping through data structures", 4, 0, Lesson.dataStructuresLoop));
+            lessonDao.insert(new Lesson("syntax", 4, 0, Lesson.syntax));
             lessonDao.insert(new Lesson("debugging", 4, 0, Lesson.debugging));
 
            return null;
@@ -99,6 +100,26 @@ public abstract class ProjectDatabase extends RoomDatabase {
         @Override
         protected Void doInBackground(Void... voids) {
             return null;
+        }
+    }
+
+    private static class AddAllCategoriesAsyncTask extends AsyncTask<Void, Void, Void> {
+        private CategoryDao categoryDao;
+
+        private AddAllCategoriesAsyncTask(ProjectDatabase projectDatabase) {
+            categoryDao = projectDatabase.categoryDao();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            categoryDao.insert(new Category("INTRODUCTION","getting started","","","",1));
+            categoryDao.insert(new Category("PART I","Variables","Data types","Operators","Strings",0));
+            categoryDao.insert(new Category("PART II","Control structures","Looping","functions","",0));
+            categoryDao.insert(new Category("PART III","OOP","Data Structures","Looping through structures","",0));
+            categoryDao.insert(new Category("PART IV","Syntax","Debugging","","",0));
+            return null;
+
+
         }
     }
 

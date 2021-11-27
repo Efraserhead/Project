@@ -6,7 +6,7 @@ public class LessonPage {
     private int imageId;
 
 
-    public LessonPage(int stringId, Integer imageId) {
+    public LessonPage(int stringId, int imageId) {
         this.stringId = stringId;
         this.imageId = imageId;
     }

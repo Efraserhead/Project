@@ -1,21 +1,28 @@
 package com.example.project;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class TestActivity extends AppCompatActivity {
@@ -32,9 +39,8 @@ public class TestActivity extends AppCompatActivity {
     private Button submit;
     private final ArrayList<Question> questions = new ArrayList<>();
     private final ArrayList<Problem> problems = new ArrayList<>();
-    private Lesson thisLesson;
-
-
+    private QuestionViewModel questionViewModel;
+    private LessonViewModel lessonViewModel;
 
 
     @Override
@@ -47,8 +53,10 @@ public class TestActivity extends AppCompatActivity {
         answer2 = (RadioButton) findViewById(R.id.radio_answer2);
         answer3 = (RadioButton) findViewById(R.id.radio_answer3);
         Intent intent = getIntent();
-        lessonChoice = intent.getIntExtra("lessonChoice",1);
-        lessonPass = intent.getIntExtra("lesson pass",0);
+        lessonChoice = intent.getIntExtra("lessonChoice", 1);
+        lessonPass = intent.getIntExtra("lesson pass", 0);
+        questionViewModel = new ViewModelProvider(this).get(QuestionViewModel.class);
+        lessonViewModel = new ViewModelProvider(this).get(LessonViewModel.class);
         submit = (Button) findViewById(R.id.submit);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,9 +65,31 @@ public class TestActivity extends AppCompatActivity {
             }
         });
 
-        loadTestQuestions();
-        nextQuestion();
+        new LoadTestQuestionsAsyncTask(this).execute();
 
+    }
+
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the app bar.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.home:
+                return true;
+            case R.id.settingsTab:
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.exitTab:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     public void nextQuestion() {
@@ -74,95 +104,167 @@ public class TestActivity extends AppCompatActivity {
             answer2.setText(thisAnswer2);
             answer3.setText(thisAnswer3);
         }
-            radioAnswers.clearCheck();
-            questionText.setText(R.string.hyperlink);
-            questionText.setMovementMethod(LinkMovementMethod.getInstance());
-            radioAnswers.setVisibility(View.INVISIBLE);
-            submit.setText("FINISH");
+        radioAnswers.clearCheck();
+        questionText.setText(R.string.hyperlink);
+        questionText.setMovementMethod(LinkMovementMethod.getInstance());
+        radioAnswers.setVisibility(View.INVISIBLE);
+        submit.setText("FINISH");
 
     }
 
     public void submitAnswer() {
 
-         if (radioAnswers.getCheckedRadioButtonId() == -1) {
-             if (testCounter >= questions.size()) {
-                 endTest();
-             }
-                 Toast toast = Toast.makeText(this,
-                         "select one answer",
-                         Toast.LENGTH_SHORT);
-                 toast.show();
+        if (radioAnswers.getCheckedRadioButtonId() == -1) {
+            if (testCounter >= questions.size()) {
+                endTest();
+            }
+            new AlertDialog.Builder(this)
+                    .setTitle("Nothing to submit")
+                    .setMessage("please click on your chosen answer")
+                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    })
+                    .create().show();
 
-         }
+        }
         RadioButton selectedButton = findViewById(radioAnswers.getCheckedRadioButtonId());
         int correctAnswerId = questions.get(testCounter).getCorrectAnswerId();
         int selectedAnswerId = radioAnswers.indexOfChild(selectedButton);
-         if(selectedAnswerId == correctAnswerId) {
-                 score++;
-                 testCounter++;
-                 nextQuestion();
-                 Toast toast = Toast.makeText(this,
-                         "correct!",
-                         Toast.LENGTH_SHORT);
-                 toast.show();
-             }
-             else {
-                 testCounter++;
-                 nextQuestion();
-                 Toast toast = Toast.makeText(this,
-                         "incorrect",
-                         Toast.LENGTH_SHORT);
-                 toast.show();
-             }
+        if (selectedAnswerId == correctAnswerId) {
+            score++;
+            testCounter++;
+            nextQuestion();
+            new AlertDialog.Builder(this)
+                    .setTitle("Correct")
+                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    })
+                    .create().show();
+        } else {
+            testCounter++;
+            nextQuestion();
+            new AlertDialog.Builder(this)
+                    .setTitle("Incorrect")
+                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    })
+                    .create().show();
+        }
 
     }
 
-            public void endTest() {
-             //update database and pass lesson
-             if(score >= 3) {
-                 updateLesson();
-                 Toast toast = Toast.makeText(this,
-                         "Your score is " + score + ". You have passed this lesson",
-                         Toast.LENGTH_SHORT);
-                 toast.show();
-             } else {
-                 Toast toast = Toast.makeText(this,
-                         "Your score is " + score + " You need to work through the lesson again",
-                         Toast.LENGTH_SHORT);
-                 toast.show();
-             }
+    public void endTest() {
+        //update database and pass lesson
+        if (score >= 3) {
+            updateLesson();
+            new AlertDialog.Builder(this)
+                    .setTitle("Lesson Passed!")
+                    .setMessage("your score is " + score + " you have passed the Lesson")
+                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    })
+                    .create().show();
 
-             Intent intent = new Intent(this, HomeActivity.class);
-             startActivity(intent);
-         }
+        } else {
+            new AlertDialog.Builder(this)
+                    .setTitle("Lesson Failed")
+                    .setMessage("your score is " + score + " you need to review the Lesson")
+                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    })
+                    .create().show();
+        }
 
-    public void loadTestQuestions() {
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
+    }
 
-        questions.addAll(ProjectDatabase.getInstance(this).questionDao().getLessonQuestions(lessonChoice));
 
+    private static class LoadTestQuestionsAsyncTask extends AsyncTask<Void, Void, List<Question>> {
+        private final WeakReference<TestActivity> testActivityWeakReference;
 
+        public LoadTestQuestionsAsyncTask(TestActivity activity) {
+            testActivityWeakReference = new WeakReference<TestActivity>(activity);
+        }
+
+        @Override
+        protected List<Question> doInBackground(Void... voids) {
+            TestActivity activity = testActivityWeakReference.get();
+            if (activity == null || activity.isFinishing()) {
+                return null;
+            }
+            return activity.questionViewModel.getLessonQuestions(activity.lessonChoice);
+        }
+
+        @Override
+        protected void onPostExecute(List<Question> questions) {
+            super.onPostExecute(questions);
+            TestActivity activity = testActivityWeakReference.get();
+            if (activity == null || activity.isFinishing()) {
+                return;
+            }
+            activity.questions.addAll(questions);
+            activity.nextQuestion();
+
+        }
     }
 
     public void updateLesson() {
         if (lessonPass == 0) {
-            thisLesson.setPass(1);
-            ProjectDatabase.getInstance(this).lessonDao().update(thisLesson);
             //updateProblemsGroup();
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-            sharedPreferences.edit().putInt("lessonProgress",+1).apply();
+            sharedPreferences.edit().putInt("lessonProgress", +1).apply();
+            new UpdateLessonAsyncTask(this).execute();
+        }
+
+
+    }
+
+    private static class UpdateLessonAsyncTask extends AsyncTask<Void, Void, Void> {
+
+        private final WeakReference<TestActivity> testActivityWeakReference;
+
+        public UpdateLessonAsyncTask(TestActivity activity) {
+            testActivityWeakReference = new WeakReference<TestActivity>(activity);
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            TestActivity activity = testActivityWeakReference.get();
+            if (activity == null || activity.isFinishing()) {
+                return null;
+            }
+            Lesson thisLesson = activity.lessonViewModel.getLesson(activity.lessonChoice);
+            thisLesson.setPass(1);
+            activity.lessonViewModel.update(thisLesson);
+            return null;
         }
     }
 
+
     public void updateProblemsGroup() {
 
-            problems.addAll(ProjectDatabase.getInstance(this).problemDao().getLessonProblems(0,lessonChoice));
-            for(Problem problem: problems) {
-                problem.setLevel(1);
-                ProjectDatabase.getInstance(this).problemDao().insert(problem);
-            }
+        problems.addAll(ProjectDatabase.getInstance(this).problemDao().getLessonProblems(lessonChoice));
+        for (Problem problem : problems) {
+            problem.setLevel(1);
+            ProjectDatabase.getInstance(this).problemDao().insert(problem);
+        }
     }
-
-
 
 
 }

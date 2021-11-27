@@ -29,7 +29,7 @@ public interface LessonDao {
     @Query("SELECT * FROM lesson_table WHERE id=:lessonChoice")
     Lesson getLesson(int lessonChoice);
 
-    @Query("SELECT * FROM lesson_table WHERE level=:level")
+    @Query("SELECT * FROM lesson_table WHERE categoryId=:level")
     Cursor getCategoryLessons(int level);
 
 

@@ -28,6 +28,7 @@ import java.util.List;
 public class TestActivity extends AppCompatActivity {
 
     private int lessonChoice;
+    private int categoryChoice;
     private int testCounter;
     private int score;
     private int lessonPass;
@@ -38,9 +39,10 @@ public class TestActivity extends AppCompatActivity {
     private RadioButton answer3;
     private Button submit;
     private final ArrayList<Question> questions = new ArrayList<>();
-    private final ArrayList<Problem> problems = new ArrayList<>();
     private QuestionViewModel questionViewModel;
     private LessonViewModel lessonViewModel;
+    private ProblemViewModel problemViewModel;
+    private CategoryViewModel categoryViewModel;
 
 
     @Override
@@ -57,6 +59,8 @@ public class TestActivity extends AppCompatActivity {
         lessonPass = intent.getIntExtra("lesson pass", 0);
         questionViewModel = new ViewModelProvider(this).get(QuestionViewModel.class);
         lessonViewModel = new ViewModelProvider(this).get(LessonViewModel.class);
+        problemViewModel = new ViewModelProvider(this).get(ProblemViewModel.class);
+        categoryViewModel = new ViewModelProvider(this).get(CategoryViewModel.class);
         submit = (Button) findViewById(R.id.submit);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,7 +169,7 @@ public class TestActivity extends AppCompatActivity {
     public void endTest() {
         //update database and pass lesson
         if (score >= 3) {
-            updateLesson();
+            updateProgress();
             new AlertDialog.Builder(this)
                     .setTitle("Lesson Passed!")
                     .setMessage("your score is " + score + " you have passed the Lesson")
@@ -224,15 +228,35 @@ public class TestActivity extends AppCompatActivity {
         }
     }
 
-    public void updateLesson() {
+    public void updateProgress() {
         if (lessonPass == 0) {
-            //updateProblemsGroup();
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
             sharedPreferences.edit().putInt("lessonProgress", +1).apply();
+            int lessonProgressNo = sharedPreferences.getInt("lessonProgress", 0);
+            switch (lessonProgressNo) {
+                case 1:
+                    categoryChoice = 1;
+                    new UpdateCategoryAsyncTask(this).execute();
+                    break;
+                case 5:
+                    categoryChoice = 2;
+                    new UpdateCategoryAsyncTask(this).execute();
+                    break;
+                case 8:
+                    categoryChoice = 3;
+                    new UpdateCategoryAsyncTask(this).execute();
+                    break;
+                case 11:
+                    categoryChoice = 4;
+                    new UpdateCategoryAsyncTask(this).execute();
+                    break;
+                default:
+                    break;
+            }
             new UpdateLessonAsyncTask(this).execute();
+            new UpdateLessonProblemsAsyncTask(this).execute();
+
         }
-
-
     }
 
     private static class UpdateLessonAsyncTask extends AsyncTask<Void, Void, Void> {
@@ -256,13 +280,46 @@ public class TestActivity extends AppCompatActivity {
         }
     }
 
+    private static class UpdateCategoryAsyncTask extends AsyncTask<Void, Void, Void> {
+        private final WeakReference<TestActivity> testActivityWeakReference;
 
-    public void updateProblemsGroup() {
+        public UpdateCategoryAsyncTask(TestActivity activity) {
+            testActivityWeakReference = new WeakReference<TestActivity>(activity);
+        }
 
-        problems.addAll(ProjectDatabase.getInstance(this).problemDao().getLessonProblems(lessonChoice));
-        for (Problem problem : problems) {
-            problem.setLevel(1);
-            ProjectDatabase.getInstance(this).problemDao().insert(problem);
+        @Override
+        protected Void doInBackground(Void... voids) {
+            TestActivity activity = testActivityWeakReference.get();
+            if (activity == null || activity.isFinishing()) {
+                return null;
+            }
+            Category thisCategory = activity.categoryViewModel.getCategory(activity.categoryChoice);
+            thisCategory.setLock(1);
+            activity.categoryViewModel.update(thisCategory);
+            return null;
+        }
+    }
+
+
+    private static class UpdateLessonProblemsAsyncTask extends AsyncTask<Void, Void, Void> {
+        private final WeakReference<TestActivity> testActivityWeakReference;
+
+        public UpdateLessonProblemsAsyncTask(TestActivity activity) {
+            testActivityWeakReference = new WeakReference<TestActivity>(activity);
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            TestActivity activity = testActivityWeakReference.get();
+            if (activity == null || activity.isFinishing()) {
+                return null;
+            }
+            List<Problem> problems = activity.problemViewModel.getLessonProblems(activity.lessonChoice);
+            for (Problem problem : problems) {
+                problem.setLevel(1);
+                activity.problemViewModel.update(problem);
+            }
+            return null;
         }
     }
 

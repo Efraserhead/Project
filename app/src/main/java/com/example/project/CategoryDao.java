@@ -26,4 +26,5 @@ public interface CategoryDao {
 
     @Query("SELECT * FROM CATEGORY_TABLE")
     List<Category> getAll();
+
 }

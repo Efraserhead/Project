@@ -1,12 +1,7 @@
 package com.example.project;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Intent;
 import android.database.Cursor;
-
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -14,6 +9,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProvider;
 
 import java.lang.ref.WeakReference;
 
@@ -99,9 +98,7 @@ public class LessonsListActivity extends AppCompatActivity {
                 startResourcesPage(lessonId4);
             }
         });
-
-
-        new LoadLessonsListAsyncTask(this).execute();
+        loadLessonList();
     }
 
 
@@ -125,6 +122,10 @@ public class LessonsListActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void loadLessonList() {
+        new LoadLessonsListAsyncTask(this).execute();
     }
 
 
@@ -208,8 +209,8 @@ public class LessonsListActivity extends AppCompatActivity {
     }
 
     public void startResourcesPage(int resourceChoice) {
-        Intent intent = new Intent(this,AdditionalResourcesActivity.class);
-        intent.putExtra("resourcesChoice",resourceChoice);
+        Intent intent = new Intent(this, AdditionalResourcesActivity.class);
+        intent.putExtra("resourcesChoice", resourceChoice);
         startActivity(intent);
     }
 

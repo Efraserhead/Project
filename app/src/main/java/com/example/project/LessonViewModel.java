@@ -2,48 +2,44 @@ package com.example.project;
 
 import android.app.Application;
 import android.database.Cursor;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 
-
-import java.util.List;
-
 public class LessonViewModel extends AndroidViewModel {
-
-    private LessonRepository lessonRepository;
+    private Repository repository;
     private Lesson lesson;
     private Cursor categoryLessons;
 
 
     public LessonViewModel(@NonNull Application application) {
         super(application);
-        lessonRepository = new LessonRepository(application);
+        repository = new Repository(application);
 
 
     }
 
     public void insert(Lesson lesson) {
 
-        lessonRepository.Insert(lesson);
+        repository.insertLesson(lesson);
     }
 
     public void update(Lesson lesson) {
-       lessonRepository.Update(lesson);
+       repository.updateLesson(lesson);
     }
 
     public void delete(Lesson lesson) {
-        lessonRepository.Delete(lesson);
+        repository.deleteLesson(lesson);
     }
 
     public Lesson getLesson(int lessonChoice) {
 
-        return lesson = lessonRepository.getLesson(lessonChoice);
+        lesson = repository.getLesson(lessonChoice);
+        return lesson;
 
     }
 
     public Cursor getCategoryLessons(int categoryChoice) {
-        categoryLessons = lessonRepository.getCategoryLessons(categoryChoice);
+        categoryLessons = repository.getCategoryLessons(categoryChoice);
         return  categoryLessons;
     }
 }

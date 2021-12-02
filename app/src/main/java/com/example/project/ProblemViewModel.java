@@ -9,38 +9,38 @@ import java.util.List;
 
 public class ProblemViewModel extends AndroidViewModel {
 
-    private ProblemRepository problemRepository;
+    private Repository repository;
 
     private List<Problem> lessonProblems, unlockedProblems, allProblems;
 
 
     public ProblemViewModel(@NonNull Application application) {
         super(application);
-        problemRepository = new ProblemRepository(application);
+        repository = new Repository(application);
     }
 
     public void insert(Problem problem) {
-        problemRepository.insert(problem);
+        repository.insertProblem(problem);
     }
 
     public void delete(Problem problem) {
-        problemRepository.delete(problem);
+        repository.deleteProblem(problem);
     }
 
     public void update(Problem problem) {
-        problemRepository.update(problem);
+        repository.updateProblem(problem);
     }
 
     public List<Problem> getLessonProblems(int lessonNo) {
-        return lessonProblems = problemRepository.getLessonProblems(lessonNo);
+        return lessonProblems = repository.getLessonProblems(lessonNo);
     }
 
 
     public List<Problem> getUnlockedProblems() {
-        return unlockedProblems = problemRepository.getUnlockedProblems();
+        return unlockedProblems = repository.getUnlockedProblems();
     }
 
     public List<Problem> getAllProblems() {
-        return allProblems = problemRepository.getAllProblems();
+        return allProblems = repository.getAllProblems();
     }
 }

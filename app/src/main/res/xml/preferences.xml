@@ -7,10 +7,10 @@
 
         <EditTextPreference
             android:dialogTitle="change your username"
+            android:icon="@drawable/edit"
             android:key="username"
             android:title="edit username"
-            android:icon="@drawable/ic_exit"
-            app:useSimpleSummaryProvider="true"/>
+            app:useSimpleSummaryProvider="true" />
 
     </PreferenceCategory>
 

@@ -6,8 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".AdditionalResourcesActivity">
 
+    <include
+        android:id="@+id/toolBar"
+        layout="@layout/toolbar"
+        tools:layout_editor_absoluteX="-16dp"
+        tools:layout_editor_absoluteY="674dp" />
+
+
     <ListView
         android:id="@+id/resourcesList"
+        android:focusable="true"
         android:layout_width="297dp"
         android:layout_height="405dp"
         android:layout_marginStart="1dp"
@@ -15,10 +23,19 @@
         android:layout_marginEnd="1dp"
         android:layout_marginBottom="1dp"
         android:autoLink="web"
-        android:entries="@array/additional_resources"
         android:linksClickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/resourcesTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/resourcesList"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolBar" />
 </androidx.constraintlayout.widget.ConstraintLayout>

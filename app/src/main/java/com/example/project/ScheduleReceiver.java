@@ -17,15 +17,15 @@ import java.util.List;
 public class ScheduleReceiver extends BroadcastReceiver {
     int scheduledProblems;
     Date today;
-    ProblemRepository problemRepository;
+    Repository repository;
 
     @Override
     public void onReceive(Context context, Intent intent) {
         Application devMind = (Application) context.getApplicationContext();
-        problemRepository = new ProblemRepository(devMind);
+        repository = new Repository(devMind);
         today = Calendar.getInstance().getTime();
         new RetrieveScheduleAsyncTask(this).execute();
-        if(!(scheduledProblems==0)) {
+        if (!(scheduledProblems == 0)) {
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "schedule")
                     .setContentTitle("Today's Schedule")
                     .setContentText("you have " + scheduledProblems + " code problems to solve ")
@@ -38,10 +38,9 @@ public class ScheduleReceiver extends BroadcastReceiver {
     }
 
 
-    private static class RetrieveScheduleAsyncTask extends AsyncTask<Void, Void, Integer> {
+    private static class RetrieveScheduleAsyncTask extends AsyncTask<Void, Void, Void> {
         WeakReference<ScheduleReceiver> scheduleReceiverWeakReference;
         int scheduledProblems;
-
 
         public RetrieveScheduleAsyncTask(ScheduleReceiver scheduleReceiver) {
             scheduleReceiverWeakReference = new WeakReference<ScheduleReceiver>(scheduleReceiver);
@@ -49,22 +48,16 @@ public class ScheduleReceiver extends BroadcastReceiver {
         }
 
         @Override
-        protected Integer doInBackground(Void... voids) {
+        protected Void doInBackground(Void... voids) {
             ScheduleReceiver scheduleReceiver = scheduleReceiverWeakReference.get();
-            List<Problem> problems = scheduleReceiver.problemRepository.getUnlockedProblems();
+            List<Problem> problems = scheduleReceiver.repository.getUnlockedProblems();
             for (Problem problem : problems) {
                 if (scheduleReceiver.today.after(problem.getNextAvailable()) || scheduleReceiver.today.equals(problem.getNextAvailable())) {
                     scheduledProblems++;
+                    scheduleReceiver.scheduledProblems = scheduledProblems;
                 }
             }
-            return scheduledProblems;
-        }
-
-        @Override
-        protected void onPostExecute(Integer integer) {
-            super.onPostExecute(integer);
-            ScheduleReceiver scheduleReceiver = scheduleReceiverWeakReference.get();
-            scheduleReceiver.scheduledProblems = integer;
+            return null;
         }
     }
 }

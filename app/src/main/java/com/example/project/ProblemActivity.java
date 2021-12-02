@@ -1,14 +1,7 @@
 package com.example.project;
 
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProvider;
-
-
 import android.content.Intent;
-
-
 import android.icu.text.SimpleDateFormat;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -21,6 +14,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProvider;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -64,7 +61,7 @@ public class ProblemActivity extends AppCompatActivity {
             }
         });
         problemViewModel = new ViewModelProvider(this).get(ProblemViewModel.class);
-        new LoadProblemScheduleAsyncTask(this).execute();
+        loadProblems();
         loadNextProblem();
 
     }
@@ -89,6 +86,10 @@ public class ProblemActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void loadProblems() {
+        new LoadProblemScheduleAsyncTask(this).execute();
     }
 
     private static class LoadProblemScheduleAsyncTask extends AsyncTask<Void, Void, List<Problem>> {
@@ -175,12 +176,16 @@ public class ProblemActivity extends AppCompatActivity {
                 }
             }
             problemsSchedule.get(problemCounter).setNextAvailable(calendar.getTime());
-            new UpdateProblemAsyncTask(this).execute();
+            updateProblem();
             problemCounter++;
             loadNextProblem();
         }
 
 
+    }
+
+    public void updateProblem() {
+        new UpdateProblemAsyncTask(this).execute();
     }
 
     private static class UpdateProblemAsyncTask extends AsyncTask<Void,Void,Void> {

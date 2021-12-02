@@ -1,16 +1,16 @@
 package com.example.project;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.viewpager2.widget.ViewPager2;
-
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.viewpager2.widget.ViewPager2;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -38,7 +38,7 @@ public class LessonActivity extends AppCompatActivity implements CustomDialogFra
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
         lessonViewModel = new ViewModelProvider(this).get(LessonViewModel.class);
-        new ChooseLessonAsyncTask(this).execute();
+        loadLesson();
 
     }
 
@@ -52,10 +52,11 @@ public class LessonActivity extends AppCompatActivity implements CustomDialogFra
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.home:
-                return true;
-            case R.id.settingsTab:
-                Intent intent = new Intent(this, SettingsActivity.class);
+                Intent intent = new Intent(this, HomeActivity.class);
                 startActivity(intent);
+            case R.id.settingsTab:
+                Intent intent2 = new Intent(this, SettingsActivity.class);
+                startActivity(intent2);
                 return true;
             case R.id.exitTab:
                 return true;
@@ -73,6 +74,10 @@ public class LessonActivity extends AppCompatActivity implements CustomDialogFra
             intent.putExtra("lesson pass",lessonPass);
             startActivity(intent);
         }
+    }
+
+    public void loadLesson() {
+        new ChooseLessonAsyncTask(this).execute();
     }
 
     private static class ChooseLessonAsyncTask extends AsyncTask<Void,Void,Lesson> {

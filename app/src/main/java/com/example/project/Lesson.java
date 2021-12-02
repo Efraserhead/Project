@@ -23,10 +23,20 @@ public class Lesson {
     private ArrayList<LessonPage> lessonPages;
 
 
+    @TypeConverters(ResourcesListConverter.class)
+    private ArrayList<String> resourceLinks;
+
+
+    @Ignore
+    public static final ArrayList<String> variablesResource = new ArrayList<>(Arrays.asList(
+           "https://www.geeksforgeeks.org/","https://www.google.com/"
+    ));
+
+
     @Ignore
     public static final ArrayList<LessonPage> introduction = new ArrayList<>(
             Arrays.asList(
-            new LessonPage(R.string.lesson1_1,R.drawable.brain_2),
+            new LessonPage(R.string.lesson1_1,0),
             new LessonPage(R.string.lesson1_2, R.drawable.brain_2),
             new LessonPage(R.string.lesson1_3,R.drawable.brain_2),
             new LessonPage(R.string.lesson1_4,R.drawable.brain_2),
@@ -299,12 +309,21 @@ public class Lesson {
     @Ignore
     public Lesson(){}
 
-    public Lesson(String name, int categoryId, int pass, ArrayList<LessonPage> lessonPages) {
+    public Lesson(String name, int categoryId, int pass, ArrayList<LessonPage> lessonPages, ArrayList<String> resourceLinks) {
         this.categoryId = categoryId;
         this.pass = pass;
         this.name = name;
         this.lessonPages = lessonPages;
+        this.resourceLinks = resourceLinks;
 
+    }
+
+    public ArrayList<String> getResourceLinks() {
+        return resourceLinks;
+    }
+
+    public void setResourceLinks(ArrayList<String> resourceLinks) {
+        this.resourceLinks = resourceLinks;
     }
 
     public ArrayList<LessonPage> getLessonPages() { return lessonPages; }

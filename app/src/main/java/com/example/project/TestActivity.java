@@ -1,17 +1,10 @@
 package com.example.project;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.preference.PreferenceManager;
-
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +12,11 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.preference.PreferenceManager;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -69,7 +67,8 @@ public class TestActivity extends AppCompatActivity {
             }
         });
 
-        new LoadTestQuestionsAsyncTask(this).execute();
+
+        loadTestQuestions();
 
     }
 
@@ -109,8 +108,6 @@ public class TestActivity extends AppCompatActivity {
             answer3.setText(thisAnswer3);
         }
         radioAnswers.clearCheck();
-        questionText.setText(R.string.hyperlink);
-        questionText.setMovementMethod(LinkMovementMethod.getInstance());
         radioAnswers.setVisibility(View.INVISIBLE);
         submit.setText("FINISH");
 
@@ -198,6 +195,10 @@ public class TestActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void loadTestQuestions() {
+        new LoadTestQuestionsAsyncTask(this).execute();
+    }
+
 
     private static class LoadTestQuestionsAsyncTask extends AsyncTask<Void, Void, List<Question>> {
         private final WeakReference<TestActivity> testActivityWeakReference;
@@ -236,27 +237,32 @@ public class TestActivity extends AppCompatActivity {
             switch (lessonProgressNo) {
                 case 1:
                     categoryChoice = 1;
-                    new UpdateCategoryAsyncTask(this).execute();
+                    updateCategory();
                     break;
                 case 5:
                     categoryChoice = 2;
-                    new UpdateCategoryAsyncTask(this).execute();
+                    updateCategory();
                     break;
                 case 8:
                     categoryChoice = 3;
-                    new UpdateCategoryAsyncTask(this).execute();
+                    updateCategory();
                     break;
                 case 11:
                     categoryChoice = 4;
-                    new UpdateCategoryAsyncTask(this).execute();
+                    updateCategory();
                     break;
                 default:
                     break;
             }
-            new UpdateLessonAsyncTask(this).execute();
-            new UpdateLessonProblemsAsyncTask(this).execute();
+            updateLesson();
+
+            unlockProblems();
 
         }
+    }
+
+    public void updateLesson() {
+        new UpdateLessonAsyncTask(this).execute();
     }
 
     private static class UpdateLessonAsyncTask extends AsyncTask<Void, Void, Void> {
@@ -280,6 +286,10 @@ public class TestActivity extends AppCompatActivity {
         }
     }
 
+    public void updateCategory() {
+        new UpdateCategoryAsyncTask(this).execute();
+    }
+
     private static class UpdateCategoryAsyncTask extends AsyncTask<Void, Void, Void> {
         private final WeakReference<TestActivity> testActivityWeakReference;
 
@@ -298,6 +308,10 @@ public class TestActivity extends AppCompatActivity {
             activity.categoryViewModel.update(thisCategory);
             return null;
         }
+    }
+
+    public void unlockProblems() {
+        new UpdateLessonProblemsAsyncTask(this).execute();
     }
 
 

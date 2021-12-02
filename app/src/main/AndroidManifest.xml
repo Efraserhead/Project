@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+
         android:name=".DevMind"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
@@ -12,6 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Project">
+
         <activity
             android:name=".AdditionalResourcesActivity"
             android:exported="true" />
@@ -22,10 +24,6 @@
             android:name=".ProblemActivity"
             android:exported="true" />
         <activity
-            android:name=".HomeActivity"
-            android:exported="true"
-            android:label="@string/Home" />
-        <activity
             android:name=".LessonsListActivity"
             android:exported="true" />
         <activity
@@ -35,15 +33,15 @@
             android:name=".LessonActivity"
             android:exported="true" />
         <activity
-            android:name=".MainActivity"
-            android:exported="true">
+            android:name=".HomeActivity"
+            android:exported="true"
+            android:label="@string/Home" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <reciever android:name=".ScheduleReceiver"/>
+        <receiver android:name=".ScheduleReceiver" />
     </application>
 
 </manifest>

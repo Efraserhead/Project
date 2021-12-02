@@ -9,34 +9,34 @@ import java.util.List;
 
 public class CategoryViewModel extends AndroidViewModel {
 
-    private CategoryRepository categoryRepository;
-
-    private Category category;
-
-    private List<Category> categories;
+    private final Repository repository;
+    Category category;
+    List<Category> categories;
 
     public CategoryViewModel(@NonNull Application application) {
         super(application);
-        categoryRepository = new CategoryRepository(application);
+        repository = new Repository(application);
     }
 
     public void insert(Category category) {
-        categoryRepository.insert(category);
+        repository.insertCategory(category);
     }
 
     public void delete(Category category) {
-        categoryRepository.delete(category);
+        repository.deleteCategory(category);
     }
 
     public void update(Category category) {
-        categoryRepository.update(category);
+        repository.updateCategory(category);
     }
 
     public Category getCategory(int categoryChoice) {
-        return category = categoryRepository.getCategory(categoryChoice);
+        category = repository.getCategory(categoryChoice);
+        return category;
     }
 
     public List<Category> getCategories() {
-        return categories = categoryRepository.getAll();
+        categories = repository.getAllCategories();
+        return categories;
     }
 }

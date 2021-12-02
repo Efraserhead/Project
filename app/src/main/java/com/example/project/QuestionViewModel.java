@@ -9,34 +9,35 @@ import java.util.List;
 
 public class QuestionViewModel extends AndroidViewModel {
 
-    private QuestionRepository questionRepository;
+
+    private Repository repository;
     private List<Question> questions;
 
 
     public QuestionViewModel(@NonNull Application application) {
         super(application);
-        questionRepository = new QuestionRepository(application);
+        repository = new Repository(application);
     }
 
 
     public void insert(Question question) {
-        questionRepository.insert(question);
+        repository.insertQuestion(question);
     }
 
 
 
     public void delete(Question question) {
-        questionRepository.delete(question);
+        repository.deleteQuestion(question);
     }
 
 
     public void update(Question question) {
-        questionRepository.update(question);
+        repository.updateQuestion(question);
     }
 
 
 
     public List<Question> getLessonQuestions(int lessonNumber) {
-        return questions = questionRepository.getLessonQuestions(lessonNumber);
+        return questions = repository.getLessonQuestions(lessonNumber);
     }
 }

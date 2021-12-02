@@ -33,10 +33,14 @@ class LessonPageAdapter extends RecyclerView.Adapter<LessonPageAdapter.ViewHolde
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         View lessonView = holder.itemView;
-        Drawable curImage = ContextCompat.getDrawable(lessonView.getContext(),pages.get(position).getImageId());
-        TextView textView = (TextView) lessonView.findViewById(R.id.lessonText);
+        int pictureCheck = pages.get(position).getImageId();
         ImageView imageView = (ImageView) lessonView.findViewById(R.id.lessonImage);
-        imageView.setImageDrawable(curImage);
+        imageView.setImageResource(android.R.color.transparent);
+        if(!(pictureCheck == 0)) {
+            Drawable curImage = ContextCompat.getDrawable(lessonView.getContext(),pages.get(position).getImageId());
+            imageView.setImageDrawable(curImage);
+        }
+        TextView textView = (TextView) lessonView.findViewById(R.id.lessonText);
         textView.setText(pages.get(position).getStringId());
 
     }
@@ -49,7 +53,7 @@ class LessonPageAdapter extends RecyclerView.Adapter<LessonPageAdapter.ViewHolde
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        //Define the view to be used for each data item
+        //Define the view to be used for each page
         private View lessonView;
 
         public ViewHolder(View v) {
